@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import styles from "../styles/Home.module.css";
 
 export default function Header() {
   return (
     <StyledHeader>
-      <h1 className={styles.title}>MatchBall</h1>
-      <h2 className={styles.description}>you have a match!</h2>
+      <StyledH1>MatchBall</StyledH1>
+      <h2>you have a match!</h2>
     </StyledHeader>
   );
 }
@@ -13,4 +12,10 @@ export default function Header() {
 const StyledHeader = styled.header`
   position: sticky;
   top: 2vh;
+  text-align: center;
+`;
+
+const StyledH1 = styled.h1`
+  margin: 0;
+  margin-top: 2vh;
 `;
