@@ -2,7 +2,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import React from "react";
 
-export default function Footer() {
+export default function Footer(): JSX.Element {
   return (
     <StyledFooter>
       Powered by WR and{" "}

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export default function Card({ name }) {
+export default function Card({ name }: { name: string }): JSX.Element {
   return <StyledP>{name}</StyledP>;
 }
 
 const StyledP = styled.p`
   font-size: 1.25rem;
-  line-height: 1.5;
-  margin: 1rem;
+  margin: 0.5rem;
+
   padding: 1.5rem;
   text-align: center;
   color: inherit;
