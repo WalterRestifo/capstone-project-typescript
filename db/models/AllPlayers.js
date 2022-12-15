@@ -3,8 +3,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const allPlayersSchema = new Schema({
-  text: { type: String, required: true },
   name: { type: String, required: true },
+  skill: { type: String, required: true },
+  language: { type: String, required: true },
+  gender: { type: String, required: true },
 });
 
 const AllPlayers =

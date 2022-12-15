@@ -4,7 +4,6 @@ import { skill } from "../data/data";
 import { gender } from "../data/data";
 import { language } from "../data/data";
 import styled from "styled-components";
-import { members } from "../data/data";
 import { Criteria, Member } from "../interfaces/interfaces";
 
 type MainProps = {
@@ -19,7 +18,7 @@ export default function Main({
   allPlayers,
   setAllPlayers,
 }: MainProps): JSX.Element {
-  const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
+  const matchedPlayers: Member[] = allPlayers?.filter((player: Member) => {
     return (
       (player.skill === desiredPlayer.skill ||
         desiredPlayer.skill === "Anything will do") &&
@@ -33,7 +32,7 @@ export default function Main({
   function handleChange(criteria: string, value: string) {
     setDesiredPlayer({ ...desiredPlayer, [criteria]: value });
   }
-  console.log("allPlayers: ", allPlayers);
+
   return (
     <StyledMain>
       <StyledDropdownMenuWrapper>
@@ -56,8 +55,11 @@ export default function Main({
         </StyledForm>
       </StyledDropdownMenuWrapper>
       <StyledCardsWrapperSection>
-        {matchedPlayers.map(({ name, id }) => {
-          return <Card key={id} name={name} />;
+        {
+          // don´t forget to assign _id to key after creating a DB
+        }
+        {matchedPlayers.map(({ name }) => {
+          return <Card key={name} name={name} />;
         })}
       </StyledCardsWrapperSection>
     </StyledMain>

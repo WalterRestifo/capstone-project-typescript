@@ -3,7 +3,6 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Main from "../components/Main";
 import { Criteria, Member } from "../interfaces/interfaces";
-import getAllPlayers from "../utils/GetAllPlayers";
 
 type HomeProps = {
   desiredPlayer: Criteria;
@@ -18,8 +17,6 @@ export default function Home({
   allPlayers,
   setAllPlayers,
 }: HomeProps): JSX.Element {
-  getAllPlayers();
-
   return (
     <StyledDiv>
       <Head>

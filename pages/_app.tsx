@@ -1,9 +1,9 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Criteria, Member } from "../interfaces/interfaces";
 
-export default async function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   const [desiredPlayer, setDesiredPlayer] = useState<Criteria>({
     skill: "Anything will do",
     language: "Anything will do",
@@ -11,6 +11,23 @@ export default async function App({ Component, pageProps }: AppProps) {
   });
 
   const [allPlayers, setAllPlayers] = useState<Member[]>([]);
+
+  async function getAllPlayers() {
+    const response = await fetch("/api/allPlayers");
+    if (!response.ok) {
+      return console.error(
+        "Error with the response of the fetch. Response status: ",
+        response.status
+      );
+    } else {
+      const listOfAllPlayers = await response.json();
+      setAllPlayers(listOfAllPlayers);
+    }
+  }
+
+  useEffect(() => {
+    getAllPlayers();
+  }, []);
 
   return (
     <Component

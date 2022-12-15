@@ -3,59 +3,36 @@ import styled from "styled-components";
 import DropdownMenu from "../components/DropdownMenu";
 import { skill, language, gender } from "../data/data";
 import { Member } from "../interfaces/interfaces";
-import { nanoid } from "nanoid";
-import getAllPlayers from "../utils/GetAllPlayers";
 
-type NewUserFormProps = {
-  allPlayers: Member[];
-  setAllPlayers: any;
-};
-
-export default function NewUserForm({
-  allPlayers,
-  setAllPlayers,
-}: NewUserFormProps): JSX.Element {
+export default function NewUserForm(): JSX.Element {
   const skillOptions = skill.slice(1);
   const languageOptions = language.slice(1);
   const genderOptions = gender.slice(1);
   const ownPlayerCard: Member = {
     name: "",
-    id: nanoid(),
     skill: "",
     language: "",
     gender: "",
   };
 
-  //function useSubmit(event: any) {
-    // event.preventDefault();
-    // ownPlayerCard.name = event.target.username.value;
-
-    // setAllPlayers([...allPlayers, ownPlayerCard]);
-    // console.log("allPlayers after submit: ", allPlayers);
-    // console.log("ownPlayerCard after submit: ", ownPlayerCard);
-
-    async function handleSubmit(event:any) {
-        event.preventDefault();
-         ownPlayerCard.name = event.target.username.value;
-        await fetch("./api/questions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(ownPlayerCard),
-        });
-        event.target.reset();
-        event.target.username.focus();
-      }
+  async function handleSubmit(event: any) {
+    event.preventDefault();
+    ownPlayerCard.name = event.target.username.value;
+    await fetch("/api/allPlayers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(ownPlayerCard),
+    });
+    event.target.reset();
+    event.target.username.focus();
   }
 
   function handleChange(criteria: string, value: string) {
     ownPlayerCard[criteria] = value;
-    console.log("ownPlayerCard after a change: ", ownPlayerCard);
   }
-  getAllPlayers();
-  console.log("old ownPlayerCard: ", ownPlayerCard);
-  console.log("old allPlayers: ", allPlayers);
+
   return (
     <StyledNewUserFormDiv>
       <Header />
