@@ -2,8 +2,24 @@ import styled from "styled-components";
 import Head from "next/head";
 import Header from "../components/Header";
 import Main from "../components/Main";
+import { Criteria, Member } from "../interfaces/interfaces";
+import getAllPlayers from "../utils/GetAllPlayers";
 
-export default function Home(): JSX.Element {
+type HomeProps = {
+  desiredPlayer: Criteria;
+  setDesiredPlayer: any;
+  allPlayers: Member[];
+  setAllPlayers: any;
+};
+
+export default function Home({
+  desiredPlayer,
+  setDesiredPlayer,
+  allPlayers,
+  setAllPlayers,
+}: HomeProps): JSX.Element {
+  getAllPlayers();
+
   return (
     <StyledDiv>
       <Head>
@@ -12,7 +28,12 @@ export default function Home(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Main />
+      <Main
+        desiredPlayer={desiredPlayer}
+        setDesiredPlayer={setDesiredPlayer}
+        allPlayers={allPlayers}
+        setAllPlayers={setAllPlayers}
+      />
     </StyledDiv>
   );
 }

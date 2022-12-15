@@ -1,6 +1,6 @@
 export interface Member {
   name: string;
-  id: number;
+  id: any;
   skill: string;
   language: string;
   gender: string;

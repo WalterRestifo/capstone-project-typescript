@@ -5,23 +5,27 @@ import { gender } from "../data/data";
 import { language } from "../data/data";
 import styled from "styled-components";
 import { members } from "../data/data";
-import { useState } from "react";
 import { Criteria, Member } from "../interfaces/interfaces";
 
-export default function Main(): JSX.Element {
-  const [desiredPlayer, setDesiredPlayer] = useState<Criteria>({
-    skill: "Anything will do",
-    language: "Anything will do",
-    gender: "Anything will do",
-  });
-
-  const matchedPlayers: Member[] = members.filter((member: Member) => {
+type MainProps = {
+  desiredPlayer: Criteria;
+  setDesiredPlayer: any;
+  allPlayers: Member[];
+  setAllPlayers: any;
+};
+export default function Main({
+  desiredPlayer,
+  setDesiredPlayer,
+  allPlayers,
+  setAllPlayers,
+}: MainProps): JSX.Element {
+  const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
     return (
-      (member.skill === desiredPlayer.skill ||
+      (player.skill === desiredPlayer.skill ||
         desiredPlayer.skill === "Anything will do") &&
-      (member.language === desiredPlayer.language ||
+      (player.language === desiredPlayer.language ||
         desiredPlayer.language === "Anything will do") &&
-      (member.gender === desiredPlayer.gender ||
+      (player.gender === desiredPlayer.gender ||
         desiredPlayer.gender === "Anything will do")
     );
   });
@@ -29,7 +33,7 @@ export default function Main(): JSX.Element {
   function handleChange(criteria: string, value: string) {
     setDesiredPlayer({ ...desiredPlayer, [criteria]: value });
   }
-
+  console.log("allPlayers: ", allPlayers);
   return (
     <StyledMain>
       <StyledDropdownMenuWrapper>
