@@ -18,6 +18,8 @@ export default function Home(): JSX.Element {
 }
 
 const StyledDiv = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 10rem auto;
   padding: 0;
-  position: relative;
 `;

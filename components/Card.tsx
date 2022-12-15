@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export default function Card({ name }: { name: string }): JSX.Element {
+type CardProps = {
+  name: string;
+};
+
+export default function Card({ name }: CardProps): JSX.Element {
   return <StyledP>{name}</StyledP>;
 }
 

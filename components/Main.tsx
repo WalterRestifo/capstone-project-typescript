@@ -61,16 +61,13 @@ export default function Main(): JSX.Element {
 }
 
 const StyledMain = styled.main`
-  height: auto;
-  min-height: 80vh;
   margin-left: 2rem;
   margin-right: 2rem;
   margin-bottom: 2rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-rows: 10rem auto;
   border: 1px solid white;
+  overflow-y: scroll;
 `;
 
 const StyledCardsWrapperSection = styled.section`
@@ -78,17 +75,14 @@ const StyledCardsWrapperSection = styled.section`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  overflow-y: scroll;
 
   border: 1px solid white;
   padding-top: 2rem;
   padding-bottom: 2rem;
-
-  min-height: auto;
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
-  position: sticky;
-  top: 122px;
   background-color: black;
   border: 1px solid white;
   padding-left: 3.1rem;

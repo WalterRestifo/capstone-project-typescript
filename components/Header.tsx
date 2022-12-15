@@ -10,9 +10,6 @@ export default function Header(): JSX.Element {
 }
 
 const StyledHeader = styled.header`
-  position: sticky;
-  top: 0;
-  z-index: 1;
   margin-left: 2rem;
   margin-right: 2rem;
   text-align: center;
