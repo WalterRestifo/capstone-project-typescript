@@ -1,47 +1,9 @@
+import styled from "styled-components";
 import Head from "next/head";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Card from "../components/Card";
+import Main from "../components/Main";
 
-import styled from "styled-components";
-
-interface Member {
-  name: string;
-  id: number;
-}
-
-const members: Member[] = [
-  {
-    name: "Walter",
-    id: 1,
-  },
-  {
-    name: "Eshi",
-    id: 2,
-  },
-  {
-    name: "Andy",
-    id: 3,
-  },
-  {
-    name: "Elgin",
-    id: 4,
-  },
-  {
-    name: "Kirsten",
-    id: 5,
-  },
-  {
-    name: "Neele",
-    id: 6,
-  },
-  {
-    name: "Waltertest",
-    id: 7,
-  },
-];
-
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <StyledDiv>
       <Head>
@@ -50,35 +12,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <StyledMain>
-        <StyledSection>
-          {members.map(({ name, id }) => {
-            return <Card key={id} name={name} />;
-          })}
-        </StyledSection>
-      </StyledMain>
+      <Main />
     </StyledDiv>
   );
 }
 
 const StyledDiv = styled.div`
-  padding: 0 2rem;
-`;
-
-const StyledMain = styled.main`
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledSection = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 10rem auto;
+  padding: 0;
 `;
