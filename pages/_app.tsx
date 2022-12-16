@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [allPlayers, setAllPlayers] = useState<Member[]>([]);
 
-  async function getAllPlayers() {
+  async function getAllPlayers(): Promise<void> {
     const response = await fetch("/api/allPlayers");
     if (!response.ok) {
       return console.error(
@@ -26,7 +26,10 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   useEffect(() => {
-    getAllPlayers();
+    const interval = setInterval(() => {
+      getAllPlayers();
+    }, 500);
+    return () => clearInterval(interval);
   }, []);
 
   return (

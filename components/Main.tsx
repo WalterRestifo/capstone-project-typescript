@@ -18,11 +18,11 @@ export default function Main({
   allPlayers,
   setAllPlayers,
 }: MainProps): JSX.Element {
-  const matchedPlayers: Member[] = allPlayers?.filter((player: Member) => {
+  const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
     return (
       (player.skill === desiredPlayer.skill ||
         desiredPlayer.skill === "Anything will do") &&
-      (player.language === desiredPlayer.language ||
+      (player.language.indexOf(desiredPlayer.language) !== -1 ||
         desiredPlayer.language === "Anything will do") &&
       (player.gender === desiredPlayer.gender ||
         desiredPlayer.gender === "Anything will do")

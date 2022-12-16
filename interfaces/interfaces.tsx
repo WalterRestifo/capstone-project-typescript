@@ -1,7 +1,7 @@
 export interface Member {
   name: string;
   skill: string;
-  language: string;
+  language: string[];
   gender: string;
 }
 

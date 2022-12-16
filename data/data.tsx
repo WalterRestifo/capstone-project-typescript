@@ -1,3 +1,5 @@
+import { Member } from "../interfaces/interfaces";
+
 export const skill: string[] = [
   "Anything will do",
   "A+",
@@ -19,3 +21,10 @@ export const gender: string[] = [
   "Male",
   "Divers",
 ];
+
+export const ownPlayerCard: Member = {
+  name: "",
+  skill: "",
+  language: [],
+  gender: "",
+};

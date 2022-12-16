@@ -2,22 +2,43 @@ import Header from "../components/Header";
 import styled from "styled-components";
 import DropdownMenu from "../components/DropdownMenu";
 import { skill, language, gender } from "../data/data";
-import { Member } from "../interfaces/interfaces";
+import Link from "next/link";
+import { useState } from "react";
+import { ownPlayerCard } from "../data/data";
 
 export default function NewUserForm(): JSX.Element {
   const skillOptions = skill.slice(1);
   const languageOptions = language.slice(1);
   const genderOptions = gender.slice(1);
-  const ownPlayerCard: Member = {
-    name: "",
-    skill: "",
-    language: "",
-    gender: "",
-  };
+  const [checkedState, setCheckedState] = useState<boolean[]>([
+    false,
+    false,
+    false,
+  ]);
+  let isSubmitted = false;
+  ownPlayerCard.language = [];
 
-  async function handleSubmit(event: any) {
+  async function handleSubmit(event: any): Promise<void> {
     event.preventDefault();
     ownPlayerCard.name = event.target.username.value;
+    const languageArray = [...ownPlayerCard.language];
+
+    checkedState.map((languageIsChecked, index) => {
+      if (languageIsChecked === true && index == 0) {
+        languageArray.push("English");
+      }
+      if (languageIsChecked === true && index == 1) {
+        languageArray.push("German");
+      }
+      if (languageIsChecked === true && index == 2) {
+        languageArray.push("Spanish");
+      }
+      ownPlayerCard.language = languageArray;
+    });
+    console.log("ownPlayerCard: ", ownPlayerCard);
+    console.log("ownPlayerCard.language: ", ownPlayerCard.language);
+    console.log("languageArray: ", languageArray);
+
     await fetch("/api/allPlayers", {
       method: "POST",
       headers: {
@@ -25,17 +46,27 @@ export default function NewUserForm(): JSX.Element {
       },
       body: JSON.stringify(ownPlayerCard),
     });
-    event.target.reset();
+    isSubmitted = true;
     event.target.username.focus();
   }
 
-  function handleChange(criteria: string, value: string) {
+  function handleChange(criteria: string, value: string): any {
     ownPlayerCard[criteria] = value;
+  }
+
+  function handleCheckboxStateChange(indexOfTheCheckbox: number): any {
+    const updatedCheckedState = checkedState.map(
+      (languageCheckedState, index) =>
+        index === indexOfTheCheckbox
+          ? !languageCheckedState
+          : languageCheckedState
+    );
+    setCheckedState(updatedCheckedState);
   }
 
   return (
     <StyledNewUserFormDiv>
-      <Header />
+      <Header h2Text={"New Player"} />
       <StyledMain>
         <StyledP>
           You can create your own profile hier and let the others know, what you
@@ -57,18 +88,32 @@ export default function NewUserForm(): JSX.Element {
               onChange={handleChange}
             />
             <DropdownMenu
-              options={languageOptions}
-              criteria={"language"}
-              onChange={handleChange}
-            />
-            <DropdownMenu
               options={genderOptions}
               criteria={"gender"}
               onChange={handleChange}
             />
-            <button>Submit</button>
+            {languageOptions.map((language, index) => {
+              return (
+                <label key={language + index}>
+                  {language}
+                  <input
+                    type={"checkbox"}
+                    name="language"
+                    id={language + index}
+                    value={language}
+                    onChange={() => handleCheckboxStateChange(index)}
+                  />
+                </label>
+              );
+            })}
+
+            <StyledSubmitButton>Submit</StyledSubmitButton>
           </StyledForm>
         </StyledDropdownMenuWrapper>
+        <p>{isSubmitted && "Your profile was created successfully! 🥳"}</p>
+        <Link href={"/"}>
+          <StyledButton>go back</StyledButton>
+        </Link>
       </StyledMain>
     </StyledNewUserFormDiv>
   );
@@ -99,10 +144,22 @@ const StyledP = styled.p`
   text-align: center;
   border: 1px solid white;
   margin: 0;
-  padding: 2rem;
 `;
 
 const StyledMain = styled.main`
   margin-left: 2rem;
   margin-right: 2rem;
+`;
+
+const StyledSubmitButton = styled.button`
+  height: 7vh;
+  width: 30vw;
+`;
+
+const StyledButton = styled.button`
+  height: 10vh;
+  width: 40vw;
+  position: absolute;
+  bottom: 0;
+  left: 30%;
 `;
