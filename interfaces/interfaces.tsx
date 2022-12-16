@@ -3,6 +3,7 @@ export interface Member {
   skill: string;
   language: string[];
   gender: string;
+  criteria?: string;
 }
 
 export interface Criteria {

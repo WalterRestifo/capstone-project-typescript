@@ -50,11 +50,15 @@ export default function NewUserForm(): JSX.Element {
     event.target.username.focus();
   }
 
-  function handleChange(criteria: string, value: string): any {
-    ownPlayerCard[criteria] = value;
+  function handleChangeSkill(value: string): void {
+    ownPlayerCard.skill = value;
   }
 
-  function handleCheckboxStateChange(indexOfTheCheckbox: number): any {
+  function handleChangeGender(value: string): void {
+    ownPlayerCard.gender = value;
+  }
+
+  function handleCheckboxStateChange(indexOfTheCheckbox: number): void {
     const updatedCheckedState = checkedState.map(
       (languageCheckedState, index) =>
         index === indexOfTheCheckbox
@@ -85,12 +89,12 @@ export default function NewUserForm(): JSX.Element {
             <DropdownMenu
               options={skillOptions}
               criteria={"skill"}
-              onChange={handleChange}
+              onChange={handleChangeSkill}
             />
             <DropdownMenu
               options={genderOptions}
               criteria={"gender"}
-              onChange={handleChange}
+              onChange={handleChangeGender}
             />
             {languageOptions.map((language, index) => {
               return (
