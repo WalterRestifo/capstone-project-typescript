@@ -25,6 +25,6 @@ export const gender: string[] = [
 export const ownPlayerCard: Member = {
   name: "",
   skill: "",
-  language: [],
+  languages: [],
   gender: "",
 };
