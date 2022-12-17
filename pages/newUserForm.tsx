@@ -34,6 +34,7 @@ export default function NewUserForm(): JSX.Element {
         languageArray.push("Spanish");
       }
       ownPlayerCard.languages = languageArray;
+      console.log(ownPlayerCard);
     });
 
     try {
