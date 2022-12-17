@@ -2,15 +2,13 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const allPlayersSchema = new Schema({
+const playerSchema = new Schema({
   name: { type: String, required: true },
   skill: { type: String, required: true },
-  language: [String],
+  languages: [String],
   gender: { type: String, required: true },
 });
 
-const AllPlayers =
-  mongoose.models.AllPlayers2 ||
-  mongoose.model("AllPlayers2", allPlayersSchema);
+const Player = mongoose.models.Player || mongoose.model("Player", playerSchema);
 
-export default AllPlayers;
+export default Player;

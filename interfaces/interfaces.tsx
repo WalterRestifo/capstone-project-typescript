@@ -1,9 +1,9 @@
 export interface Member {
   name: string;
   skill: string;
-  language: string[];
+  languages: string[];
   gender: string;
-  criteria?: string;
+  _id?: any;
 }
 
 export interface Criteria {

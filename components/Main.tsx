@@ -22,7 +22,7 @@ export default function Main({
     return (
       (player.skill === desiredPlayer.skill ||
         desiredPlayer.skill === "Anything will do") &&
-      (player.language.indexOf(desiredPlayer.language) !== -1 ||
+      (player.languages.indexOf(desiredPlayer.language) !== -1 ||
         desiredPlayer.language === "Anything will do") &&
       (player.gender === desiredPlayer.gender ||
         desiredPlayer.gender === "Anything will do")
@@ -44,7 +44,7 @@ export default function Main({
           />
           <DropdownMenu
             options={language}
-            criteria={"language"}
+            criteria={"languages"}
             onChange={handleChange}
           />
           <DropdownMenu
@@ -58,8 +58,8 @@ export default function Main({
         {
           // don´t forget to assign _id to key after creating a DB
         }
-        {matchedPlayers.map(({ name }) => {
-          return <Card key={name} name={name} />;
+        {matchedPlayers.map(({ name, _id }) => {
+          return <Card key={_id} name={name} />;
         })}
       </StyledCardsWrapperSection>
     </StyledMain>

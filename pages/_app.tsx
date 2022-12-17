@@ -13,15 +13,19 @@ export default function App({ Component, pageProps }: AppProps) {
   const [allPlayers, setAllPlayers] = useState<Member[]>([]);
 
   async function getAllPlayers(): Promise<void> {
-    const response = await fetch("/api/allPlayers");
-    if (!response.ok) {
-      return console.error(
-        "Error with the response of the fetch. Response status: ",
-        response.status
-      );
-    } else {
-      const listOfAllPlayers = await response.json();
-      setAllPlayers(listOfAllPlayers);
+    try {
+      const response = await fetch("/api/players");
+      if (!response.ok) {
+        return console.error(
+          "Error with the response of the fetch. Response status: ",
+          response.status
+        );
+      } else {
+        const listOfAllPlayers = await response.json();
+        setAllPlayers(listOfAllPlayers);
+      }
+    } catch (error) {
+      console.error("Something went wrong with the fetch: ", error);
     }
   }
 

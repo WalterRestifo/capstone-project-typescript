@@ -16,12 +16,12 @@ export default function NewUserForm(): JSX.Element {
     false,
   ]);
   let isSubmitted = false;
-  ownPlayerCard.language = [];
+  ownPlayerCard.languages = [];
 
   async function handleSubmit(event: any): Promise<void> {
     event.preventDefault();
     ownPlayerCard.name = event.target.username.value;
-    const languageArray = [...ownPlayerCard.language];
+    const languageArray = [...ownPlayerCard.languages];
 
     checkedState.map((languageIsChecked, index) => {
       if (languageIsChecked === true && index == 0) {
@@ -33,19 +33,21 @@ export default function NewUserForm(): JSX.Element {
       if (languageIsChecked === true && index == 2) {
         languageArray.push("Spanish");
       }
-      ownPlayerCard.language = languageArray;
+      ownPlayerCard.languages = languageArray;
     });
-    console.log("ownPlayerCard: ", ownPlayerCard);
-    console.log("ownPlayerCard.language: ", ownPlayerCard.language);
-    console.log("languageArray: ", languageArray);
 
-    await fetch("/api/allPlayers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ownPlayerCard),
-    });
+    try {
+      await fetch("/api/players", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ownPlayerCard),
+      });
+    } catch (error) {
+      console.error("Something went wrong with the fetch: ", error);
+    }
+
     isSubmitted = true;
     event.target.username.focus();
   }
@@ -70,7 +72,7 @@ export default function NewUserForm(): JSX.Element {
 
   return (
     <StyledNewUserFormDiv>
-      <Header h2Text={"New Player"} />
+      <Header teaser={"New Player"} />
       <StyledMain>
         <StyledP>
           You can create your own profile hier and let the others know, what you
@@ -115,9 +117,7 @@ export default function NewUserForm(): JSX.Element {
           </StyledForm>
         </StyledDropdownMenuWrapper>
         <p>{isSubmitted && "Your profile was created successfully! 🥳"}</p>
-        <Link href={"/"}>
-          <StyledButton>go back</StyledButton>
-        </Link>
+        <StyledLink href={"/"}>back to the main page</StyledLink>
       </StyledMain>
     </StyledNewUserFormDiv>
   );
@@ -160,9 +160,13 @@ const StyledSubmitButton = styled.button`
   width: 30vw;
 `;
 
-const StyledButton = styled.button`
+const StyledLink = styled(Link)`
   height: 10vh;
   width: 40vw;
+  background-color: lightgray;
+  color: black;
+  text-align: center;
+  padding-top: 1rem;
   position: absolute;
   bottom: 0;
   left: 30%;
