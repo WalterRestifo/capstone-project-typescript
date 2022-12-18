@@ -19,7 +19,7 @@ export const gender: string[] = [
   "Anything will do",
   "Female",
   "Male",
-  "Divers",
+  "Diverse",
 ];
 
 export const ownPlayerCard: Member = {

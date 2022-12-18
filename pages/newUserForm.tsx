@@ -75,10 +75,7 @@ export default function NewUserForm(): JSX.Element {
     <StyledNewUserFormDiv>
       <Header teaser={"New Player"} />
       <StyledMain>
-        <StyledP>
-          You can create your own profile hier and let the others know, what you
-          can!
-        </StyledP>
+        <StyledP>Create your profile here and share your abilities!</StyledP>
         <StyledDropdownMenuWrapper>
           <StyledForm onSubmit={handleSubmit}>
             <label htmlFor="username">Your name (max 10 characters):</label>
