@@ -4,24 +4,26 @@ import { skill } from "../data/data";
 import { gender } from "../data/data";
 import { language } from "../data/data";
 import styled from "styled-components";
-import { members } from "../data/data";
-import { useState } from "react";
 import { Criteria, Member } from "../interfaces/interfaces";
 
-export default function Main(): JSX.Element {
-  const [desiredPlayer, setDesiredPlayer] = useState<Criteria>({
-    skill: "Anything will do",
-    language: "Anything will do",
-    gender: "Anything will do",
-  });
-
-  const matchedPlayers: Member[] = members.filter((member: Member) => {
+type MainProps = {
+  desiredPlayer: Criteria;
+  setDesiredPlayer: any;
+  allPlayers: Member[];
+  setAllPlayers: any;
+};
+export default function Main({
+  desiredPlayer,
+  setDesiredPlayer,
+  allPlayers,
+}: MainProps): JSX.Element {
+  const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
     return (
-      (member.skill === desiredPlayer.skill ||
+      (player.skill === desiredPlayer.skill ||
         desiredPlayer.skill === "Anything will do") &&
-      (member.language === desiredPlayer.language ||
+      (player.languages.indexOf(desiredPlayer.language) !== -1 ||
         desiredPlayer.language === "Anything will do") &&
-      (member.gender === desiredPlayer.gender ||
+      (player.gender === desiredPlayer.gender ||
         desiredPlayer.gender === "Anything will do")
     );
   });
@@ -41,7 +43,7 @@ export default function Main(): JSX.Element {
           />
           <DropdownMenu
             options={language}
-            criteria={"language"}
+            criteria={"languages"}
             onChange={handleChange}
           />
           <DropdownMenu
@@ -52,8 +54,11 @@ export default function Main(): JSX.Element {
         </StyledForm>
       </StyledDropdownMenuWrapper>
       <StyledCardsWrapperSection>
-        {matchedPlayers.map(({ name, id }) => {
-          return <Card key={id} name={name} />;
+        {
+          // don´t forget to assign _id to key after creating a DB
+        }
+        {matchedPlayers.map(({ name, _id }) => {
+          return <Card key={_id} name={name} />;
         })}
       </StyledCardsWrapperSection>
     </StyledMain>

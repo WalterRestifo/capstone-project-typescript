@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
-export default function Header(): JSX.Element {
+type HeaderProps = {
+  teaser: string;
+};
+
+export default function Header({ teaser }: HeaderProps): JSX.Element {
   return (
     <StyledHeader>
       <StyledH1>MatchBall</StyledH1>
-      <h2>you have a match!</h2>
+      <h2>{teaser}</h2>
     </StyledHeader>
   );
 }
