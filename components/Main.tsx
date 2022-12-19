@@ -16,7 +16,6 @@ export default function Main({
   desiredPlayer,
   setDesiredPlayer,
   allPlayers,
-  setAllPlayers,
 }: MainProps): JSX.Element {
   const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
     return (
