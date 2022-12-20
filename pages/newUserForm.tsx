@@ -5,6 +5,7 @@ import { skill, language, gender } from "../data/data";
 import Link from "next/link";
 import { useState } from "react";
 import { ownPlayerCard } from "../data/data";
+import { CldUploadButton } from "next-cloudinary";
 
 export default function NewUserForm(): JSX.Element {
   const skillOptions = skill.slice(1);
@@ -78,6 +79,7 @@ export default function NewUserForm(): JSX.Element {
         <StyledP>Create your profile here and share your abilities!</StyledP>
         <StyledDropdownMenuWrapper>
           <StyledForm onSubmit={handleSubmit}>
+            <CldUploadButton uploadPreset="next-cloudinary-unsigned" />
             <label htmlFor="username">Your name (max 10 characters):</label>
             <input
               name="username"
