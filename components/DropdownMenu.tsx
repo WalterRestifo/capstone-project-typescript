@@ -15,7 +15,7 @@ export default function DropdownMenu({
       <StyledSelect
         name={criteria}
         id={criteria}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange(criteria, event.target.value)}
       >
         {options.map((option: string) => {
           return (

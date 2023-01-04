@@ -29,11 +29,15 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     getAllPlayers();
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      getAllPlayers();
-    }, 500);
-    return () => clearInterval(interval);
+    getAllPlayers();
   }, []);
 
   return (

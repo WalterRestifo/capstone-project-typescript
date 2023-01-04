@@ -5,7 +5,6 @@ import { skill, language, gender } from "../data/data";
 import Link from "next/link";
 import { useState } from "react";
 import { ownPlayerCard } from "../data/data";
-import { CldUploadButton } from "next-cloudinary";
 
 export default function NewUserForm(): JSX.Element {
   const skillOptions = skill.slice(1);
@@ -16,7 +15,7 @@ export default function NewUserForm(): JSX.Element {
     false,
     false,
   ]);
-  let isSubmitted = false;
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   ownPlayerCard.languages = [];
 
   async function handleSubmit(event: any): Promise<void> {
@@ -46,19 +45,21 @@ export default function NewUserForm(): JSX.Element {
         },
         body: JSON.stringify(ownPlayerCard),
       });
+      ownPlayerCard.cloudinarySrc =
+        "https://res.cloudinary.com/doryasyte/image/upload/v1671547911/MatchBall/profiles/s9ijhqdwo9xa3gfdwi4x.jpg";
     } catch (error) {
       console.error("Something went wrong with the fetch: ", error);
     }
 
-    isSubmitted = true;
+    setIsSubmitted(true);
     event.target.username.focus();
   }
 
-  function handleChangeSkill(value: string): void {
+  function handleChangeSkill(criteria: string, value: string): void {
     ownPlayerCard.skill = value;
   }
 
-  function handleChangeGender(value: string): void {
+  function handleChangeGender(criteria: string, value: string): void {
     ownPlayerCard.gender = value;
   }
 
@@ -76,10 +77,15 @@ export default function NewUserForm(): JSX.Element {
     <StyledNewUserFormDiv>
       <Header teaser={"New Player"} />
       <StyledMain>
-        <StyledP>Create your profile here and share your abilities!</StyledP>
+        <StyledP>
+          Create your profile here and share your abilities! Please begin with
+          uploading your profile picture.
+        </StyledP>
         <StyledDropdownMenuWrapper>
           <StyledForm onSubmit={handleSubmit}>
-            <CldUploadButton uploadPreset="next-cloudinary-unsigned" />
+            <button>
+              <Link href="imageUpload">upload your profile picture!</Link>
+            </button>
             <label htmlFor="username">Your name (max 10 characters):</label>
             <input
               name="username"
@@ -98,6 +104,7 @@ export default function NewUserForm(): JSX.Element {
               criteria={"gender"}
               onChange={handleChangeGender}
             />
+            <p>Choose your languages:</p>
             {languageOptions.map((language, index) => {
               return (
                 <label key={language + index}>
@@ -167,7 +174,10 @@ const StyledLink = styled(Link)`
   color: black;
   text-align: center;
   padding-top: 1rem;
-  position: absolute;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: sticky;
   bottom: 0;
-  left: 30%;
+  left: 27%;
 `;

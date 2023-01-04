@@ -14,6 +14,7 @@ export default async function handler(req, res) {
           skill: player.skill,
           languages: player.languages,
           gender: player.gender,
+          cloudinarySrc: player.cloudinarySrc,
         };
       });
 

@@ -7,7 +7,7 @@ const playerSchema = new Schema({
   skill: { type: String, required: true },
   languages: [String],
   gender: { type: String, required: true },
-  cloudinarySrc: { type: String, required: false },
+  cloudinarySrc: { type: String, required: true },
 });
 
 const Player = mongoose.models.Player || mongoose.model("Player", playerSchema);

@@ -43,7 +43,8 @@ export default function Main({
           />
           <DropdownMenu
             options={language}
-            criteria={"languages"}
+            //cannot use criteria={languages} because it will brake the filter function
+            criteria={"language"}
             onChange={handleChange}
           />
           <DropdownMenu
@@ -54,19 +55,8 @@ export default function Main({
         </StyledForm>
       </StyledDropdownMenuWrapper>
       <StyledCardsWrapperSection>
-        {
-          // don´t forget to assign _id to key after creating a DB
-        }
-        {matchedPlayers.map(({ name }) => {
-          return (
-            <Card
-              key={name}
-              name={name}
-              cloudinarySrc={
-                "https://res.cloudinary.com/doryasyte/image/upload/v1671449663/cld-sample-5.jpg"
-              }
-            />
-          );
+        {matchedPlayers.map(({ name, cloudinarySrc }) => {
+          return <Card key={name} name={name} cloudinarySrc={cloudinarySrc} />;
         })}
       </StyledCardsWrapperSection>
     </StyledMain>
