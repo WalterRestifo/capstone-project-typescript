@@ -22,11 +22,10 @@ export default function Card({
       <p>{name}</p>
       <p>{skill}</p>
       <p>{gender}</p>
-      <StyledUl>
-        {languages.map((language: string) => {
-          return <li key={language}>{language}</li>;
-        })}
-      </StyledUl>
+
+      {languages.map((language: string) => {
+        return <p key={language}>{language}</p>;
+      })}
     </StyledDiv>
   );
 }
@@ -51,8 +50,4 @@ const StyledDiv = styled.div`
     color: #0070f3;
     border-color: #0070f3;
   }
-`;
-
-const StyledUl = styled.ul`
-  list-style: none;
 `;
