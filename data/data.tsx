@@ -27,4 +27,6 @@ export const ownPlayerCard: Member = {
   skill: "A+",
   languages: [],
   gender: "Female",
+  cloudinarySrc:
+    "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg",
 };

@@ -4,6 +4,7 @@ export interface Member {
   languages: string[];
   gender: string;
   _id?: any;
+  cloudinarySrc: string;
 }
 
 export interface Criteria {

@@ -1,14 +1,26 @@
 import styled from "styled-components";
+import { CldImage } from "next-cloudinary";
 
 type CardProps = {
   name: string;
+  cloudinarySrc: string;
 };
 
-export default function Card({ name }: CardProps): JSX.Element {
-  return <StyledP>{name}</StyledP>;
+export default function Card({ name, cloudinarySrc }: CardProps): JSX.Element {
+  return (
+    <StyledDiv>
+      <CldImage
+        width="80"
+        height="80"
+        src={cloudinarySrc}
+        alt="a profile image"
+      />
+      <p>{name}</p>
+    </StyledDiv>
+  );
 }
 
-const StyledP = styled.p`
+const StyledDiv = styled.div`
   font-size: 1.25rem;
   margin: 0.5rem;
 

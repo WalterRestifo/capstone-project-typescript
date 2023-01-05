@@ -32,9 +32,13 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const interval = setInterval(() => {
       getAllPlayers();
-    }, 500);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // useEffect(() => {
+  //   getAllPlayers();
+  // }, []);
 
   return (
     <Component
