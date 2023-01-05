@@ -40,6 +40,6 @@ export default function Home({
 const StyledDiv = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: 10rem auto;
+  grid-template-rows: 7rem auto 4rem;
   padding: 0;
 `;

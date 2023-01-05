@@ -55,9 +55,20 @@ export default function Main({
         </StyledForm>
       </StyledDropdownMenuWrapper>
       <StyledCardsWrapperSection>
-        {matchedPlayers.map(({ name, cloudinarySrc }) => {
-          return <Card key={name} name={name} cloudinarySrc={cloudinarySrc} />;
-        })}
+        {matchedPlayers.map(
+          ({ name, cloudinarySrc, gender, languages, skill }) => {
+            return (
+              <Card
+                key={name}
+                name={name}
+                cloudinarySrc={cloudinarySrc}
+                skill={skill}
+                languages={languages}
+                gender={gender}
+              />
+            );
+          }
+        )}
       </StyledCardsWrapperSection>
     </StyledMain>
   );
@@ -66,23 +77,16 @@ export default function Main({
 const StyledMain = styled.main`
   margin-left: 2rem;
   margin-right: 2rem;
-  margin-bottom: 2rem;
   display: grid;
-  grid-template-rows: 10rem auto;
+  grid-template-rows: 8rem auto;
   border: 1px solid white;
   overflow-y: scroll;
 `;
 
 const StyledCardsWrapperSection = styled.section`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  overflow-y: scroll;
-
+  overflow-x: scroll;
   border: 1px solid white;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
@@ -90,11 +94,10 @@ const StyledDropdownMenuWrapper = styled.section`
   border: 1px solid white;
   padding-left: 3.1rem;
   padding-right: 3.1rem;
+  height: fit-content;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
