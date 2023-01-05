@@ -22,10 +22,11 @@ export default function Card({
       <p>{name}</p>
       <p>{skill}</p>
       <p>{gender}</p>
-
-      {languages.map((language: string) => {
-        return <p key={language}>{language}</p>;
-      })}
+      <ul>
+        {languages.map((language: string) => {
+          return <li key={language}>{language}</li>;
+        })}
+      </ul>
     </StyledDiv>
   );
 }
