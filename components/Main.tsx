@@ -11,11 +11,13 @@ type MainProps = {
   setDesiredPlayer: any;
   allPlayers: Member[];
   setAllPlayers: any;
+  isSelectable: boolean;
 };
 export default function Main({
   desiredPlayer,
   setDesiredPlayer,
   allPlayers,
+  isSelectable,
 }: MainProps): JSX.Element {
   const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
     return (
@@ -65,6 +67,7 @@ export default function Main({
                 skill={skill}
                 languages={languages}
                 gender={gender}
+                isSelectable={isSelectable}
               />
             );
           }

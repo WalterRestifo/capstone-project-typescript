@@ -1,14 +1,66 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
 import MiniCard from "../components/MiniCard";
+import { useEffect, useState } from "react";
+import { MiniPlayer } from "../interfaces/interfaces";
 
 export default function ScoreForm(): JSX.Element {
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  let pointsTeam1: number = 0;
+  let pointsTeam2: number = 0;
+
+  function handleSubmit(event: any) {
     event.preventDefault();
+    const form = event.currentTarget;
+    pointsTeam1 = form.elements.pointsTeam1.value;
+    pointsTeam2 = form.elements.pointsTeam2.value;
+    setIsSubmitted(true);
   }
+
+  useEffect(() => {
+    if (isSubmitted) {
+      console.log("pointsTeam1: ", pointsTeam1);
+      console.log("pointsTeam2: ", pointsTeam2);
+      handleScoreTeam1(pointsTeam1);
+      handleScoreTeam2(pointsTeam2);
+    }
+  }, [isSubmitted, pointsTeam1]);
+
+  function handleScoreTeam1(pointsTeam1: number) {
+    if (team1Array) {
+      const teamWithScore = [...team1Array, pointsTeam1];
+      localStorage.setItem("team1", JSON.stringify(teamWithScore));
+    } else {
+      throw new Error("No players found in team 1 ");
+    }
+  }
+
+  function handleScoreTeam2(pointsTeam2: number) {
+    if (team2Array) {
+      const teamWithScore = [...team2Array, pointsTeam2];
+      localStorage.setItem("team2", JSON.stringify(teamWithScore));
+    } else {
+      throw new Error("No players found in team 2 ");
+    }
+  }
+
+  let team1Array: any[] = [];
+  let team2Array: any[] = [];
+
+  if (typeof window !== "undefined") {
+    const team1 = localStorage.getItem("team1");
+    if (team1) {
+      team1Array = JSON.parse(team1);
+    }
+
+    const team2 = localStorage.getItem("team2");
+    if (team2) {
+      team2Array = JSON.parse(team2);
+    }
+  }
+
   return (
     <StyledDiv>
       <Head>
@@ -17,60 +69,90 @@ export default function ScoreForm(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header teaser={"Scores"} />
-      <section>
-        <div>
-          <MiniCard
-            name={"Andy"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-          <MiniCard
-            name={"Merle"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-        </div>
-        <div>
-          <span>VS</span>
-          <MiniCard
-            name={"Julia"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-          <MiniCard
-            name={"Jan"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-        </div>
-      </section>
-      <section>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="pointsLeftSide">Points</label>
-          <input
-            type="number"
-            name="pointsLeftSide"
-            id="pointsLeftSide"
-            aria-label="points for the Team on the left side"
-          />
-          <label htmlFor="pointsRightSide">Points</label>
-          <input
-            type="number"
-            name="pointsRightSide"
-            id="pointsRightSide"
-            aria-label="points for the Team on the right side"
-          />
-          <button>Save</button>
-        </form>
-      </section>
-
-      <Navigation />
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledFormDiv>
+          <div>
+            <StyledP>Team 1</StyledP>
+            {team1Array &&
+              team1Array
+                .filter((player) => typeof player !== "number")
+                .map((player) => {
+                  return (
+                    <MiniCard
+                      key={player.name + player.cloudinarySrc}
+                      name={player.name}
+                      cloudinarySrc={player.cloudinarySrc}
+                    />
+                  );
+                })}
+            <label htmlFor="pointsTeam1">Points: </label>
+            <StyledInput
+              type="number"
+              name="pointsTeam1"
+              id="pointsTeam1"
+              maxLength={2}
+              aria-label="points for Team 1"
+            />
+          </div>
+          <p>VS</p>
+          <div>
+            <StyledP>Team 2</StyledP>
+            {team2Array &&
+              team2Array
+                .filter((player) => typeof player !== "number")
+                .map((player) => {
+                  return (
+                    <MiniCard
+                      key={player.name + player.cloudinarySrc}
+                      name={player.name}
+                      cloudinarySrc={player.cloudinarySrc}
+                    />
+                  );
+                })}
+            <label htmlFor="pointsTeam2">Points: </label>
+            <StyledInput
+              type="number"
+              name="pointsTeam2"
+              id="pointsTeam2"
+              maxLength={2}
+              aria-label="points for Team 2"
+            />
+          </div>
+        </StyledFormDiv>
+        {!isSubmitted && <button type="submit">save</button>}
+        <button>
+          <Link href={"/games"}>back</Link>
+        </button>
+      </StyledForm>
     </StyledDiv>
   );
 }
 
-const StyledDiv = styled.div``;
+const StyledDiv = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 7rem auto;
+  padding: 0;
+`;
+
+const StyledForm = styled.form`
+  border: 1px solid #eaeaea;
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;
+
+const StyledFormDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #eaeaea;
+`;
+
+const StyledP = styled.p`
+  text-align: center;
+`;
+
+const StyledInput = styled.input`
+  width: 2rem;
+  height: 2rem;
+`;

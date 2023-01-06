@@ -12,3 +12,8 @@ export interface Criteria {
   language: string;
   gender: string;
 }
+
+export interface MiniPlayer {
+  name: string;
+  cloudinarySrc: string;
+}

@@ -3,8 +3,27 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
+import MiniCard from "../components/MiniCard";
+import { MiniPlayer } from "../interfaces/interfaces";
+import { useEffect } from "react";
 
 export default function Games(): JSX.Element {
+  let team1Array: MiniPlayer[] = [];
+  let team2Array: MiniPlayer[] = [];
+
+  useEffect(() => {
+    const team1 = localStorage.getItem("team1");
+    if (team1) {
+      team1Array = JSON.parse(team1);
+      localStorage.removeItem("team1");
+    }
+
+    const team2 = localStorage.getItem("team2");
+    if (team2) {
+      team2Array = JSON.parse(team2);
+      localStorage.removeItem("team2");
+    }
+  }, []);
   return (
     <StyledDiv>
       <Head>
@@ -13,10 +32,27 @@ export default function Games(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header teaser={"Games"} />
-      <section></section>
+      <section>
+        {team1Array &&
+          team1Array.map((player) => (
+            <MiniCard
+              key={player.name + player.cloudinarySrc}
+              name={player.name}
+              cloudinarySrc={player.cloudinarySrc}
+            />
+          ))}
+        {team2Array &&
+          team2Array.map((player) => (
+            <MiniCard
+              key={player.name + player.cloudinarySrc}
+              name={player.name}
+              cloudinarySrc={player.cloudinarySrc}
+            />
+          ))}
+      </section>
       <section>
         <button>
-          <Link href={"/scoreForm"}>Add a new game</Link>
+          <Link href={"/teamChoiceForm"}>Add a new game</Link>
         </button>
       </section>
       <Navigation />
@@ -24,4 +60,9 @@ export default function Games(): JSX.Element {
   );
 }
 
-const StyledDiv = styled.div``;
+const StyledDiv = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 7rem auto 4rem;
+  padding: 0;
+`;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { CldImage } from "next-cloudinary";
+import { MiniPlayer } from "../interfaces/interfaces";
 
 type CardProps = {
   name: string;
@@ -7,6 +8,7 @@ type CardProps = {
   languages: string[];
   gender: string;
   skill: string;
+  isSelectable: boolean;
 };
 
 export default function Card({
@@ -15,7 +17,31 @@ export default function Card({
   languages,
   gender,
   skill,
+  isSelectable,
 }: CardProps): JSX.Element {
+  function handleTeamSelection1(newPlayer: MiniPlayer) {
+    const team = localStorage.getItem("team1");
+    if (team) {
+      const teamArray = JSON.parse(team);
+      const newTeam = [...teamArray, newPlayer];
+      localStorage.setItem("team1", JSON.stringify(newTeam));
+    } else {
+      localStorage.setItem("team1", JSON.stringify([newPlayer]));
+    }
+  }
+
+  function handleTeamSelection2(newPlayer: MiniPlayer) {
+    const team = localStorage.getItem("team2");
+    if (team) {
+      const teamArray = JSON.parse(team);
+      const newTeam = [...teamArray, newPlayer];
+      localStorage.setItem("team2", JSON.stringify(newTeam));
+    } else {
+      localStorage.setItem("team2", JSON.stringify([newPlayer]));
+    }
+  }
+
+  const player = { name: name, cloudinarySrc: cloudinarySrc };
   return (
     <StyledDiv>
       <CldImage width="80" height="80" src={cloudinarySrc} alt={name} />
@@ -27,6 +53,17 @@ export default function Card({
           return <li key={language}>{language}</li>;
         })}
       </ul>
+
+      {isSelectable && (
+        <>
+          <button onClick={() => handleTeamSelection1(player)}>
+            add to team 1
+          </button>
+          <button onClick={() => handleTeamSelection2(player)}>
+            add to team 2
+          </button>
+        </>
+      )}
     </StyledDiv>
   );
 }
