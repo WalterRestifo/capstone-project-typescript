@@ -37,16 +37,11 @@ export default function ScoreForm(): JSX.Element {
 
   useEffect(() => {
     if (isSubmitted) {
-      console.log("pointsTeam1: ", pointsTeam1);
-      console.log("pointsTeam2: ", pointsTeam2);
+      const team1WithPoints = { ...team1, points: pointsTeam1 };
+      localStorage.setItem("team1WithPoints", JSON.stringify(team1WithPoints));
 
-      setTeam1({ ...team1, points: pointsTeam1 });
-      localStorage.setItem("team1WithPoints", JSON.stringify(team1));
-      console.log("team1: ", team1);
-
-      setTeam2({ ...team2, points: pointsTeam2 });
-      localStorage.setItem("team2WithPoints", JSON.stringify(team2));
-      console.log("team2: ", team2);
+      const team2WithPoints = { ...team2, points: pointsTeam2 };
+      localStorage.setItem("team2WithPoints", JSON.stringify(team2WithPoints));
     }
   }, [isSubmitted]);
 
