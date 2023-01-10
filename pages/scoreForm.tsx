@@ -4,18 +4,34 @@ import styled from "styled-components";
 import Link from "next/link";
 import MiniCard from "../components/MiniCard";
 import { useEffect, useState } from "react";
-import { MiniPlayer } from "../interfaces/interfaces";
+import { Team } from "../interfaces/interfaces";
 
 export default function ScoreForm(): JSX.Element {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  let pointsTeam1: number = 0;
-  let pointsTeam2: number = 0;
+  const [pointsTeam1, setPointsTeam1] = useState(0);
+  const [pointsTeam2, setPointsTeam2] = useState(0);
+  const [team1, setTeam1] = useState<Team>({ players: [], points: 0 });
+  const [team2, setTeam2] = useState<Team>({ players: [], points: 0 });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const team1FromLocalStorage = localStorage.getItem("team1");
+      if (team1FromLocalStorage) {
+        setTeam1(JSON.parse(team1FromLocalStorage));
+      }
+
+      const team2FromLocalStorage = localStorage.getItem("team2");
+      if (team2FromLocalStorage) {
+        setTeam2(JSON.parse(team2FromLocalStorage));
+      }
+    }
+  }, []);
 
   function handleSubmit(event: any) {
     event.preventDefault();
     const form = event.currentTarget;
-    pointsTeam1 = form.elements.pointsTeam1.value;
-    pointsTeam2 = form.elements.pointsTeam2.value;
+    setPointsTeam1(form.elements.pointsTeam1.value);
+    setPointsTeam2(form.elements.pointsTeam2.value);
     setIsSubmitted(true);
   }
 
@@ -23,43 +39,16 @@ export default function ScoreForm(): JSX.Element {
     if (isSubmitted) {
       console.log("pointsTeam1: ", pointsTeam1);
       console.log("pointsTeam2: ", pointsTeam2);
-      handleScoreTeam1(pointsTeam1);
-      handleScoreTeam2(pointsTeam2);
-    }
-  }, [isSubmitted, pointsTeam1]);
 
-  function handleScoreTeam1(pointsTeam1: number) {
-    if (team1Array) {
-      const teamWithScore = [...team1Array, pointsTeam1];
-      localStorage.setItem("team1", JSON.stringify(teamWithScore));
-    } else {
-      throw new Error("No players found in team 1 ");
-    }
-  }
+      setTeam1({ ...team1, points: pointsTeam1 });
+      localStorage.setItem("team1WithPoints", JSON.stringify(team1));
+      console.log("team1: ", team1);
 
-  function handleScoreTeam2(pointsTeam2: number) {
-    if (team2Array) {
-      const teamWithScore = [...team2Array, pointsTeam2];
-      localStorage.setItem("team2", JSON.stringify(teamWithScore));
-    } else {
-      throw new Error("No players found in team 2 ");
+      setTeam2({ ...team2, points: pointsTeam2 });
+      localStorage.setItem("team2WithPoints", JSON.stringify(team2));
+      console.log("team2: ", team2);
     }
-  }
-
-  let team1Array: any[] = [];
-  let team2Array: any[] = [];
-
-  if (typeof window !== "undefined") {
-    const team1 = localStorage.getItem("team1");
-    if (team1) {
-      team1Array = JSON.parse(team1);
-    }
-
-    const team2 = localStorage.getItem("team2");
-    if (team2) {
-      team2Array = JSON.parse(team2);
-    }
-  }
+  }, [isSubmitted]);
 
   return (
     <StyledDiv>
@@ -73,18 +62,16 @@ export default function ScoreForm(): JSX.Element {
         <StyledFormDiv>
           <div>
             <StyledP>Team 1</StyledP>
-            {team1Array &&
-              team1Array
-                .filter((player) => typeof player !== "number")
-                .map((player) => {
-                  return (
-                    <MiniCard
-                      key={player.name + player.cloudinarySrc}
-                      name={player.name}
-                      cloudinarySrc={player.cloudinarySrc}
-                    />
-                  );
-                })}
+            {team1.players.length > 0 &&
+              team1.players.map((player) => {
+                return (
+                  <MiniCard
+                    key={player.name + player.cloudinarySrc}
+                    name={player.name}
+                    cloudinarySrc={player.cloudinarySrc}
+                  />
+                );
+              })}
             <label htmlFor="pointsTeam1">Points: </label>
             <StyledInput
               type="number"
@@ -97,18 +84,16 @@ export default function ScoreForm(): JSX.Element {
           <p>VS</p>
           <div>
             <StyledP>Team 2</StyledP>
-            {team2Array &&
-              team2Array
-                .filter((player) => typeof player !== "number")
-                .map((player) => {
-                  return (
-                    <MiniCard
-                      key={player.name + player.cloudinarySrc}
-                      name={player.name}
-                      cloudinarySrc={player.cloudinarySrc}
-                    />
-                  );
-                })}
+            {team2 &&
+              team2.players.map((player) => {
+                return (
+                  <MiniCard
+                    key={player.name + player.cloudinarySrc}
+                    name={player.name}
+                    cloudinarySrc={player.cloudinarySrc}
+                  />
+                );
+              })}
             <label htmlFor="pointsTeam2">Points: </label>
             <StyledInput
               type="number"

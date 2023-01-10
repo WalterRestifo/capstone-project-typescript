@@ -4,26 +4,34 @@ import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
 import MiniCard from "../components/MiniCard";
-import { MiniPlayer } from "../interfaces/interfaces";
-import { useEffect } from "react";
+import { MiniPlayer, Team } from "../interfaces/interfaces";
+import { useEffect, useState } from "react";
 
 export default function Games(): JSX.Element {
-  let team1Array: MiniPlayer[] = [];
-  let team2Array: MiniPlayer[] = [];
+  const [matches, setMatches] = useState([]);
 
   useEffect(() => {
-    const team1 = localStorage.getItem("team1");
-    if (team1) {
-      team1Array = JSON.parse(team1);
-      localStorage.removeItem("team1");
+    const team1WithPoints = localStorage.getItem("team1WithPoints");
+    const team2WithPoints = localStorage.getItem("team2WithPoints");
+    if (team1WithPoints && team2WithPoints) {
+      const team1Obj = JSON.parse(team1WithPoints);
+      const team2Obj = JSON.parse(team2WithPoints);
+      setMatches([...matches, [team1Obj, team2Obj]]);
     }
-
-    const team2 = localStorage.getItem("team2");
-    if (team2) {
-      team2Array = JSON.parse(team2);
-      localStorage.removeItem("team2");
-    }
+    console.log("matches: ", matches);
   }, []);
+
+  function handleDelete() {
+    setMatches([]);
+  }
+
+  function handleEmptyLocalStorage() {
+    localStorage.removeItem("team1");
+    localStorage.removeItem("team2");
+    localStorage.removeItem("team1WithPoints");
+    localStorage.removeItem("team2WithPoints");
+  }
+
   return (
     <StyledDiv>
       <Head>
@@ -33,27 +41,29 @@ export default function Games(): JSX.Element {
       </Head>
       <Header teaser={"Games"} />
       <section>
-        {team1Array &&
-          team1Array.map((player) => (
-            <MiniCard
-              key={player.name + player.cloudinarySrc}
-              name={player.name}
-              cloudinarySrc={player.cloudinarySrc}
-            />
-          ))}
-        {team2Array &&
-          team2Array.map((player) => (
-            <MiniCard
-              key={player.name + player.cloudinarySrc}
-              name={player.name}
-              cloudinarySrc={player.cloudinarySrc}
-            />
-          ))}
+        {matches &&
+          matches.map((match: []) =>
+            match.map((team: Team) => {
+              return (
+                <StyledTeam key={team.players[0].name + team.points}>
+                  {team.players.map((player: MiniPlayer) => (
+                    <MiniCard
+                      key={player.name + player.cloudinarySrc}
+                      name={player.name}
+                      cloudinarySrc={player.cloudinarySrc}
+                    />
+                  ))}
+                  <p>{team.points}</p>
+                </StyledTeam>
+              );
+            })
+          )}
       </section>
       <section>
-        <button>
+        <button onClick={handleEmptyLocalStorage}>
           <Link href={"/teamChoiceForm"}>Add a new game</Link>
         </button>
+        <button onClick={handleDelete}>Delete all games</button>
       </section>
       <Navigation />
     </StyledDiv>
@@ -65,4 +75,9 @@ const StyledDiv = styled.div`
   display: grid;
   grid-template-rows: 7rem auto 4rem;
   padding: 0;
+`;
+
+const StyledTeam = styled.div`
+  border: 1px solid white;
+  display: flex;
 `;

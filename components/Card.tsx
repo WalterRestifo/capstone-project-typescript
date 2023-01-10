@@ -22,22 +22,22 @@ export default function Card({
   function handleTeamSelection1(newPlayer: MiniPlayer) {
     const team = localStorage.getItem("team1");
     if (team) {
-      const teamArray = JSON.parse(team);
-      const newTeam = [...teamArray, newPlayer];
-      localStorage.setItem("team1", JSON.stringify(newTeam));
+      const teamObj = JSON.parse(team);
+      teamObj.players.push(newPlayer);
+      localStorage.setItem("team1", JSON.stringify(teamObj));
     } else {
-      localStorage.setItem("team1", JSON.stringify([newPlayer]));
+      localStorage.setItem("team1", JSON.stringify({ players: [newPlayer] }));
     }
   }
 
   function handleTeamSelection2(newPlayer: MiniPlayer) {
     const team = localStorage.getItem("team2");
     if (team) {
-      const teamArray = JSON.parse(team);
-      const newTeam = [...teamArray, newPlayer];
-      localStorage.setItem("team2", JSON.stringify(newTeam));
+      const teamObj = JSON.parse(team);
+      teamObj.players.push(newPlayer);
+      localStorage.setItem("team2", JSON.stringify(teamObj));
     } else {
-      localStorage.setItem("team2", JSON.stringify([newPlayer]));
+      localStorage.setItem("team2", JSON.stringify({ players: [newPlayer] }));
     }
   }
 

@@ -17,3 +17,8 @@ export interface MiniPlayer {
   name: string;
   cloudinarySrc: string;
 }
+
+export interface Team {
+  players: MiniPlayer[];
+  points?: number;
+}
