@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       const response = await fetch("/api/players");
       if (!response.ok) {
         return console.error(
-          "Error with the response of the fetch. Response status: ",
+          "Error with the response of the players fetch. Response status: ",
           response.status
         );
       } else {
@@ -25,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setAllPlayers(listOfAllPlayers);
       }
     } catch (error) {
-      console.error("Something went wrong with the fetch: ", error);
+      console.error("Something went wrong with the players fetch: ", error);
     }
   }
 

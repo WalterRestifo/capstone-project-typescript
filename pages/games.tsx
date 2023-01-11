@@ -6,16 +6,38 @@ import Link from "next/link";
 import MiniCard from "../components/MiniCard";
 import { MiniPlayer, Team } from "../interfaces/interfaces";
 import { useEffect, useState } from "react";
+import getAllTeams from "../utils/getAllTeams";
+import postTeam from "../utils/postTeam";
+import TeamComponent from "../components/TeamComponent";
 
 export default function Games(): JSX.Element {
   const [matches, setMatches] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchedTeams = getAllTeams();
+  //   ???
+  // }, []);
+
   useEffect(() => {
-    const team1WithPoints = localStorage.getItem("team1WithPoints");
-    const team2WithPoints = localStorage.getItem("team2WithPoints");
-    if (team1WithPoints && team2WithPoints) {
-      const team1Obj = JSON.parse(team1WithPoints);
-      const team2Obj = JSON.parse(team2WithPoints);
+    const team1WithLastGamePoints = localStorage.getItem(
+      "team1WithLastGamePoints"
+    );
+    const team2WithLastGamePoints = localStorage.getItem(
+      "team2WithLastGamePoints"
+    );
+    if (team1WithLastGamePoints && team2WithLastGamePoints) {
+      const team1Obj = JSON.parse(team1WithLastGamePoints);
+      const team2Obj = JSON.parse(team2WithLastGamePoints);
+      if (team1Obj.lastGamePoints > team2Obj.lastGamePoints) {
+        team1Obj.wins += 1;
+      } else {
+        team2Obj.wins += 1;
+      }
+      team1Obj.games += 1;
+      team2Obj.games += 1;
+      team1Obj.points += parseInt(team1Obj.lastGamePoints);
+      team2Obj.points += parseInt(team2Obj.lastGamePoints);
+
       setMatches([...matches, [team1Obj, team2Obj]]);
     }
     console.log("matches: ", matches);
@@ -28,9 +50,16 @@ export default function Games(): JSX.Element {
   function handleEmptyLocalStorage() {
     localStorage.removeItem("team1");
     localStorage.removeItem("team2");
-    localStorage.removeItem("team1WithPoints");
-    localStorage.removeItem("team2WithPoints");
+    localStorage.removeItem("team1WithLastGamePoints");
+    localStorage.removeItem("team2WithLastGamePoints");
   }
+
+  // update the database with the new wins, games and points
+
+  // function handleDeleteMatches() {
+  //   delete all matches from the databank
+
+  // }
 
   return (
     <StyledDiv>
@@ -45,23 +74,14 @@ export default function Games(): JSX.Element {
           matches.map((match: []) =>
             match.map((team: Team) => {
               return (
-                <StyledTeam key={team.players[0].name + team.points}>
-                  {team.players.map((player: MiniPlayer) => (
-                    <MiniCard
-                      key={player.name + player.cloudinarySrc}
-                      name={player.name}
-                      cloudinarySrc={player.cloudinarySrc}
-                    />
-                  ))}
-                  <p>{team.points}</p>
-                </StyledTeam>
+                <TeamComponent team={team} key={team.id} isClickable={false} />
               );
             })
           )}
       </section>
       <section>
         <button onClick={handleEmptyLocalStorage}>
-          <Link href={"/teamChoiceForm"}>Add a new game</Link>
+          <Link href={"/teamChoice"}>Add a new game</Link>
         </button>
         <button onClick={handleDelete}>Delete all games</button>
       </section>
@@ -80,4 +100,5 @@ const StyledDiv = styled.div`
 const StyledTeam = styled.div`
   border: 1px solid white;
   display: flex;
+  flex-wrap: wrap;
 `;

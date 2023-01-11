@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { CldImage } from "next-cloudinary";
 import { MiniPlayer } from "../interfaces/interfaces";
+import { nanoid } from "nanoid";
 
 type CardProps = {
   name: string;
@@ -19,25 +20,21 @@ export default function Card({
   skill,
   isSelectable,
 }: CardProps): JSX.Element {
-  function handleTeamSelection1(newPlayer: MiniPlayer) {
-    const team = localStorage.getItem("team1");
+  function handleTeamSelection(newPlayer: MiniPlayer) {
+    const team = localStorage.getItem("newTeam");
     if (team) {
       const teamObj = JSON.parse(team);
       teamObj.players.push(newPlayer);
-      localStorage.setItem("team1", JSON.stringify(teamObj));
+      localStorage.setItem("newTeam", JSON.stringify(teamObj));
     } else {
-      localStorage.setItem("team1", JSON.stringify({ players: [newPlayer] }));
-    }
-  }
-
-  function handleTeamSelection2(newPlayer: MiniPlayer) {
-    const team = localStorage.getItem("team2");
-    if (team) {
-      const teamObj = JSON.parse(team);
-      teamObj.players.push(newPlayer);
-      localStorage.setItem("team2", JSON.stringify(teamObj));
-    } else {
-      localStorage.setItem("team2", JSON.stringify({ players: [newPlayer] }));
+      const newTeam = {
+        players: [newPlayer],
+        points: 0,
+        games: 0,
+        wins: 0,
+        id: nanoid(),
+      };
+      localStorage.setItem("newTeam", JSON.stringify(newTeam));
     }
   }
 
@@ -55,14 +52,9 @@ export default function Card({
       </ul>
 
       {isSelectable && (
-        <>
-          <button onClick={() => handleTeamSelection1(player)}>
-            add to team 1
-          </button>
-          <button onClick={() => handleTeamSelection2(player)}>
-            add to team 2
-          </button>
-        </>
+        <button onClick={() => handleTeamSelection(player)}>
+          add to team 1
+        </button>
       )}
     </StyledDiv>
   );

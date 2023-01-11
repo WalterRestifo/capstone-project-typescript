@@ -19,6 +19,9 @@ export interface MiniPlayer {
 }
 
 export interface Team {
-  players: MiniPlayer[];
-  points?: number;
+  players: [];
+  points: number;
+  id: string;
+  wins: number;
+  games: number;
 }

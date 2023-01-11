@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Member } from "../interfaces/interfaces";
 import Head from "next/head";
 import Header from "../components/Header";
@@ -19,6 +19,9 @@ export default function TeamChoiceForm({
   allPlayers,
   setAllPlayers,
 }: TeamChoiceFormProps): JSX.Element {
+  useEffect(() => {
+    localStorage.removeItem("newTeam");
+  }, []);
   return (
     <div>
       <Head>
@@ -34,11 +37,11 @@ export default function TeamChoiceForm({
         setAllPlayers={setAllPlayers}
         isSelectable={true}
       />
-      <button type="submit">
-        <Link href={"/scoreForm"}>Continue</Link>
+      <button>
+        <Link href={"/teamChoice"}>Continue</Link>
       </button>
       <button>
-        <Link href={"/games"}>Back</Link>
+        <Link href={"/games"}>Back to games</Link>
       </button>
     </div>
   );

@@ -4,14 +4,24 @@ import styled from "styled-components";
 import Link from "next/link";
 import MiniCard from "../components/MiniCard";
 import { useEffect, useState } from "react";
-import { Team } from "../interfaces/interfaces";
+import { MiniPlayer, Team } from "../interfaces/interfaces";
 
 export default function ScoreForm(): JSX.Element {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [pointsTeam1, setPointsTeam1] = useState(0);
-  const [pointsTeam2, setPointsTeam2] = useState(0);
-  const [team1, setTeam1] = useState<Team>({ players: [], points: 0 });
-  const [team2, setTeam2] = useState<Team>({ players: [], points: 0 });
+  const [team1, setTeam1] = useState<Team>({
+    players: [],
+    points: 0,
+    wins: 0,
+    games: 0,
+    id: "",
+  });
+  const [team2, setTeam2] = useState<Team>({
+    players: [],
+    points: 0,
+    wins: 0,
+    games: 0,
+    id: "",
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -27,23 +37,25 @@ export default function ScoreForm(): JSX.Element {
     }
   }, []);
 
-  function handleSubmit(event: any) {
+  async function handleSubmit(event: any) {
     event.preventDefault();
     const form = event.currentTarget;
-    setPointsTeam1(form.elements.pointsTeam1.value);
-    setPointsTeam2(form.elements.pointsTeam2.value);
+    const pointsTeam1 = form.elements.pointsTeam1.value;
+    const pointsTeam2 = form.elements.pointsTeam2.value;
     setIsSubmitted(true);
+
+    const team1WithLastGamePoints = { ...team1, lastGamePoints: pointsTeam1 };
+    localStorage.setItem(
+      "team1WithLastGamePoints",
+      JSON.stringify(team1WithLastGamePoints)
+    );
+
+    const team2WithLastGamePoints = { ...team2, lastGamePoints: pointsTeam2 };
+    localStorage.setItem(
+      "team2WithLastGamePoints",
+      JSON.stringify(team2WithLastGamePoints)
+    );
   }
-
-  useEffect(() => {
-    if (isSubmitted) {
-      const team1WithPoints = { ...team1, points: pointsTeam1 };
-      localStorage.setItem("team1WithPoints", JSON.stringify(team1WithPoints));
-
-      const team2WithPoints = { ...team2, points: pointsTeam2 };
-      localStorage.setItem("team2WithPoints", JSON.stringify(team2WithPoints));
-    }
-  }, [isSubmitted]);
 
   return (
     <StyledDiv>
@@ -58,7 +70,7 @@ export default function ScoreForm(): JSX.Element {
           <div>
             <StyledP>Team 1</StyledP>
             {team1.players.length > 0 &&
-              team1.players.map((player) => {
+              team1.players.map((player: MiniPlayer) => {
                 return (
                   <MiniCard
                     key={player.name + player.cloudinarySrc}
@@ -80,7 +92,7 @@ export default function ScoreForm(): JSX.Element {
           <div>
             <StyledP>Team 2</StyledP>
             {team2 &&
-              team2.players.map((player) => {
+              team2.players.map((player: MiniPlayer) => {
                 return (
                   <MiniCard
                     key={player.name + player.cloudinarySrc}
