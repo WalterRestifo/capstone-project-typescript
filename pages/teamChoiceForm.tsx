@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Link from "next/link";
 import Main from "../components/Main";
 import { Criteria } from "../interfaces/interfaces";
+import postTeam from "../utils/postTeam";
 
 type TeamChoiceFormProps = {
   desiredPlayer: Criteria;
@@ -22,6 +23,15 @@ export default function TeamChoiceForm({
   useEffect(() => {
     localStorage.removeItem("newTeam");
   }, []);
+
+  async function handlePostTeam() {
+    const newTeam = localStorage.getItem("newTeam");
+    if (newTeam) {
+      const newTeamObj = JSON.parse(newTeam);
+      postTeam(newTeamObj);
+    }
+  }
+
   return (
     <div>
       <Head>
@@ -37,7 +47,7 @@ export default function TeamChoiceForm({
         setAllPlayers={setAllPlayers}
         isSelectable={true}
       />
-      <button>
+      <button onClick={handlePostTeam}>
         <Link href={"/teamChoice"}>Continue</Link>
       </button>
       <button>

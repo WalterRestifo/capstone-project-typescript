@@ -52,9 +52,7 @@ export default function Card({
       </ul>
 
       {isSelectable && (
-        <button onClick={() => handleTeamSelection(player)}>
-          add to team 1
-        </button>
+        <button onClick={() => handleTeamSelection(player)}>add to team</button>
       )}
     </StyledDiv>
   );

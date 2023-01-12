@@ -1,6 +1,6 @@
 import { Team } from "../interfaces/interfaces";
 
-export default async function postMatches(team: Team): Promise<void> {
+export default async function postTeam(team: Team): Promise<void> {
   try {
     await fetch("/api/teams", {
       method: "POST",

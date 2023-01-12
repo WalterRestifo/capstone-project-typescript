@@ -12,7 +12,7 @@ export default async function handler(req, res) {
           players: team.players,
           wins: team.wins,
           games: team.games,
-          id: team.id,
+          id: team._id,
           points: team.points,
         };
       });

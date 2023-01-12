@@ -13,22 +13,11 @@ export default function TeamChoiceForm(): JSX.Element {
   ]);
 
   useEffect(() => {
-    async function getAllTeamsAndUpdateDBWithNewTeamIfThereIsOne() {
+    async function fetchTeamsAndUpdateTeamState() {
       const fetchedTeams = await getAllTeams();
-      const newTeam = localStorage.getItem("newTeam");
-      if (newTeam) {
-        const newTeamObj = JSON.parse(newTeam);
-        const AllTeams = [newTeamObj, ...fetchedTeams];
-        postTeam(newTeamObj);
-        setTeams(AllTeams);
-
-        console.log("Teams + newTeam: ", AllTeams);
-      } else {
-        setTeams(fetchedTeams);
-        console.log("Teams: ", fetchedTeams);
-      }
+      setTeams(fetchedTeams);
     }
-    getAllTeamsAndUpdateDBWithNewTeamIfThereIsOne();
+    fetchTeamsAndUpdateTeamState();
   }, []);
 
   return (

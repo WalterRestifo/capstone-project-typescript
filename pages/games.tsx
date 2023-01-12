@@ -9,14 +9,17 @@ import { useEffect, useState } from "react";
 import getAllTeams from "../utils/getAllTeams";
 import postTeam from "../utils/postTeam";
 import TeamComponent from "../components/TeamComponent";
+import updateTeam from "../utils/updateTeam";
 
 export default function Games(): JSX.Element {
   const [matches, setMatches] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchedTeams = getAllTeams();
-  //   ???
-  // }, []);
+  useEffect(() => {
+    const matchesFromLocalStorage = localStorage.getItem("matches");
+    if (matchesFromLocalStorage) {
+      setMatches(JSON.parse(matchesFromLocalStorage));
+    }
+  }, []);
 
   useEffect(() => {
     const team1WithLastGamePoints = localStorage.getItem(
@@ -38,7 +41,12 @@ export default function Games(): JSX.Element {
       team1Obj.points += parseInt(team1Obj.lastGamePoints);
       team2Obj.points += parseInt(team2Obj.lastGamePoints);
 
-      setMatches([...matches, [team1Obj, team2Obj]]);
+      updateTeam(team1Obj);
+      updateTeam(team2Obj);
+
+      const updatedMatches = [...matches, [team1Obj, team2Obj]];
+      localStorage.setItem("matches", JSON.stringify(updatedMatches));
+      setMatches(updatedMatches);
     }
     console.log("matches: ", matches);
   }, []);
@@ -53,8 +61,6 @@ export default function Games(): JSX.Element {
     localStorage.removeItem("team1WithLastGamePoints");
     localStorage.removeItem("team2WithLastGamePoints");
   }
-
-  // update the database with the new wins, games and points
 
   // function handleDeleteMatches() {
   //   delete all matches from the databank
