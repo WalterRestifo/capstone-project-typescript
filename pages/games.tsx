@@ -3,11 +3,8 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
-import MiniCard from "../components/MiniCard";
-import { MiniPlayer, Team } from "../interfaces/interfaces";
+import { Team } from "../interfaces/interfaces";
 import { useEffect, useState } from "react";
-import getAllTeams from "../utils/getAllTeams";
-import postTeam from "../utils/postTeam";
 import TeamComponent from "../components/TeamComponent";
 import updateTeam from "../utils/updateTeam";
 
@@ -31,6 +28,9 @@ export default function Games(): JSX.Element {
     if (team1WithLastGamePoints && team2WithLastGamePoints) {
       const team1Obj = JSON.parse(team1WithLastGamePoints);
       const team2Obj = JSON.parse(team2WithLastGamePoints);
+      team1Obj.lastGamePoints = parseInt(team1Obj.lastGamePoints);
+      team2Obj.lastGamePoints = parseInt(team2Obj.lastGamePoints);
+
       if (team1Obj.lastGamePoints > team2Obj.lastGamePoints) {
         team1Obj.wins += 1;
       } else {
@@ -44,11 +44,32 @@ export default function Games(): JSX.Element {
       updateTeam(team1Obj);
       updateTeam(team2Obj);
 
-      const updatedMatches = [...matches, [team1Obj, team2Obj]];
-      localStorage.setItem("matches", JSON.stringify(updatedMatches));
-      setMatches(updatedMatches);
+      const jsonMatchesFromLocalStorage = localStorage.getItem("matches");
+      if (jsonMatchesFromLocalStorage) {
+        const matchesFromLocalStorage = JSON.parse(jsonMatchesFromLocalStorage);
+        console.log(
+          "matches wurde im localstorage gefunden: ",
+          matchesFromLocalStorage
+        );
+
+        const updatedMatches = [
+          ...matchesFromLocalStorage,
+          {
+            teams: [team1Obj, team2Obj],
+            matchId: matchesFromLocalStorage.length + 1,
+          },
+        ];
+        localStorage.setItem("matches", JSON.stringify(updatedMatches));
+        setMatches(updatedMatches);
+      } else {
+        console.log("matches wurde im localstorage nicht gefunden ");
+        localStorage.setItem(
+          "matches",
+          JSON.stringify([{ teams: [team1Obj, team2Obj], matchId: 1 }])
+        );
+        setMatches([{ teams: [team1Obj, team2Obj], matchId: 1 }]);
+      }
     }
-    console.log("matches: ", matches);
   }, []);
 
   function handleDelete() {
@@ -77,13 +98,22 @@ export default function Games(): JSX.Element {
       <Header teaser={"Games"} />
       <section>
         {matches &&
-          matches.map((match: []) =>
-            match.map((team: Team) => {
-              return (
-                <TeamComponent team={team} key={team.id} isClickable={false} />
-              );
-            })
-          )}
+          matches.map((match: []) => {
+            return (
+              <div key={match.matchId}>
+                <p>{match.matchId}</p>
+                {match.teams.map((team: Team) => {
+                  return (
+                    <TeamComponent
+                      team={team}
+                      key={team.id}
+                      isClickable={false}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
       </section>
       <section>
         <button onClick={handleEmptyLocalStorage}>
