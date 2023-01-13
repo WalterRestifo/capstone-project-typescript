@@ -1,14 +1,91 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
 import MiniCard from "../components/MiniCard";
+import { useEffect, useState } from "react";
+import { MiniPlayer, Team } from "../interfaces/interfaces";
+import updateTeam from "../utils/updateTeam";
 
 export default function ScoreForm(): JSX.Element {
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [team1, setTeam1] = useState<Team>({
+    players: [],
+    points: 0,
+    wins: 0,
+    games: 0,
+    id: "",
+  });
+  const [team2, setTeam2] = useState<Team>({
+    players: [],
+    points: 0,
+    wins: 0,
+    games: 0,
+    id: "",
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const team1FromLocalStorage = localStorage.getItem("team1");
+      if (team1FromLocalStorage) {
+        setTeam1(JSON.parse(team1FromLocalStorage));
+      }
+
+      const team2FromLocalStorage = localStorage.getItem("team2");
+      if (team2FromLocalStorage) {
+        setTeam2(JSON.parse(team2FromLocalStorage));
+      }
+    }
+  }, []);
+
+  async function handleSubmit(event: any) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const pointsTeam1 = parseInt(form.elements.pointsTeam1.value);
+    const pointsTeam2 = parseInt(form.elements.pointsTeam2.value);
+    setIsSubmitted(true);
+    const team1Obj = team1;
+    const team2Obj = team2;
+    let winner = "";
+    if (pointsTeam1 > pointsTeam2) {
+      team1Obj.wins += 1;
+      winner = "Team 1";
+    } else if (pointsTeam1 < pointsTeam2) {
+      team2Obj.wins += 1;
+      winner = "Team 2";
+    } else {
+      return alert("Please enter a valid score");
+    }
+    team1Obj.games += 1;
+    team2Obj.games += 1;
+    team1Obj.points += pointsTeam1;
+    team2Obj.points += pointsTeam2;
+
+    async function postMatch(match: object) {
+      try {
+        await fetch("/api/matches", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(match),
+        });
+      } catch (error) {
+        console.error(
+          "Something went wrong with the post fetch of a matches in /scoreForm: ",
+          error
+        );
+      }
+    }
+    postMatch({ team1: team1Obj, team2: team2Obj, winner: winner });
+
+    async function updateTeams() {
+      updateTeam(team1Obj);
+      updateTeam(team2Obj);
+    }
+    updateTeams();
   }
+
   return (
     <StyledDiv>
       <Head>
@@ -17,60 +94,90 @@ export default function ScoreForm(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header teaser={"Scores"} />
-      <section>
-        <div>
-          <MiniCard
-            name={"Andy"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-          <MiniCard
-            name={"Merle"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-        </div>
-        <div>
-          <span>VS</span>
-          <MiniCard
-            name={"Julia"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-          <MiniCard
-            name={"Jan"}
-            cloudinarySrc={
-              "https://res.cloudinary.com/doryasyte/image/upload/v1672829815/MatchBall/profiles/llfjwvlfiwtquwny8ckp.jpg"
-            }
-          />
-        </div>
-      </section>
-      <section>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="pointsLeftSide">Points</label>
-          <input
-            type="number"
-            name="pointsLeftSide"
-            id="pointsLeftSide"
-            aria-label="points for the Team on the left side"
-          />
-          <label htmlFor="pointsRightSide">Points</label>
-          <input
-            type="number"
-            name="pointsRightSide"
-            id="pointsRightSide"
-            aria-label="points for the Team on the right side"
-          />
-          <button>Save</button>
-        </form>
-      </section>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledFormDiv>
+          <div>
+            <StyledP>Team 1</StyledP>
+            {team1 &&
+              team1.players.length > 0 &&
+              team1.players.map((player: MiniPlayer) => {
+                return (
+                  <MiniCard
+                    key={player.name + player.cloudinarySrc}
+                    name={player.name}
+                    cloudinarySrc={player.cloudinarySrc}
+                  />
+                );
+              })}
 
-      <Navigation />
+            <label htmlFor="pointsTeam1">Points: </label>
+            <StyledInput
+              type="number"
+              name="pointsTeam1"
+              id="pointsTeam1"
+              maxLength={2}
+              aria-label="points for Team 1"
+            />
+          </div>
+
+          <p>VS</p>
+
+          <div>
+            <StyledP>Team 2</StyledP>
+            {team2 &&
+              team2.players.map((player: MiniPlayer) => {
+                return (
+                  <MiniCard
+                    key={player.name + player.cloudinarySrc}
+                    name={player.name}
+                    cloudinarySrc={player.cloudinarySrc}
+                  />
+                );
+              })}
+            <label htmlFor="pointsTeam2">Points: </label>
+            <StyledInput
+              type="number"
+              name="pointsTeam2"
+              id="pointsTeam2"
+              maxLength={2}
+              aria-label="points for Team 2"
+            />
+          </div>
+        </StyledFormDiv>
+        {!isSubmitted && <button type="submit">save</button>}
+        <button>
+          <Link href={"/games"}>back</Link>
+        </button>
+      </StyledForm>
     </StyledDiv>
   );
 }
 
-const StyledDiv = styled.div``;
+const StyledDiv = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 7rem auto;
+  padding: 0;
+`;
+
+const StyledForm = styled.form`
+  border: 1px solid #eaeaea;
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;
+
+const StyledFormDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #eaeaea;
+`;
+
+const StyledP = styled.p`
+  text-align: center;
+`;
+
+const StyledInput = styled.input`
+  width: 2rem;
+  height: 2rem;
+`;

@@ -28,6 +28,7 @@ const StyledDiv = styled.div`
   margin: 0.5rem;
 
   padding: 1.5rem;
+  padding-bottom: 0;
   text-align: center;
   color: inherit;
   text-decoration: none;

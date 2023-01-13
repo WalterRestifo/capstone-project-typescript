@@ -12,3 +12,23 @@ export interface Criteria {
   language: string;
   gender: string;
 }
+
+export interface MiniPlayer {
+  name: string;
+  cloudinarySrc: string;
+}
+
+export interface Team {
+  players: [];
+  points: number;
+  id: string;
+  wins: number;
+  games: number;
+}
+
+export interface Match {
+  team1: Team;
+  team2: Team;
+  id: string;
+  winner: string;
+}

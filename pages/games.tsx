@@ -3,8 +3,29 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
+import { Team, Match } from "../interfaces/interfaces";
+import { useEffect, useState } from "react";
+import TeamComponent from "../components/TeamComponent";
 
 export default function Games(): JSX.Element {
+  const [matches, setMatches] = useState<[Match]>();
+
+  useEffect(() => {
+    async function getMatches() {
+      const response = await fetch("/api/matches");
+      const data: [Match] = await response.json();
+      setMatches(data);
+    }
+    getMatches();
+  }, []);
+
+  function handleEmptyLocalStorage() {
+    localStorage.removeItem("team1");
+    localStorage.removeItem("team2");
+    localStorage.removeItem("team1WithLastGamePoints");
+    localStorage.removeItem("team2WithLastGamePoints");
+  }
+
   return (
     <StyledDiv>
       <Head>
@@ -13,10 +34,22 @@ export default function Games(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header teaser={"Games"} />
-      <section></section>
       <section>
-        <button>
-          <Link href={"/scoreForm"}>Add a new game</Link>
+        {matches &&
+          matches.map((match: Match, index: number) => {
+            return (
+              <div key={match.id}>
+                <p>Match {index + 1}</p>
+                <TeamComponent team={match.team1} isClickable={false} />
+                <TeamComponent team={match.team2} isClickable={false} />
+                <p>Winner: {match.winner}</p>
+              </div>
+            );
+          })}
+      </section>
+      <section>
+        <button onClick={handleEmptyLocalStorage}>
+          <Link href={"/teamChoice"}>Add a new game</Link>
         </button>
       </section>
       <Navigation />
@@ -24,4 +57,15 @@ export default function Games(): JSX.Element {
   );
 }
 
-const StyledDiv = styled.div``;
+const StyledDiv = styled.div`
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 7rem auto 4rem;
+  padding: 0;
+`;
+
+const StyledTeam = styled.div`
+  border: 1px solid white;
+  display: flex;
+  flex-wrap: wrap;
+`;

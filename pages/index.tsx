@@ -31,6 +31,7 @@ export default function Home({
         setDesiredPlayer={setDesiredPlayer}
         allPlayers={allPlayers}
         setAllPlayers={setAllPlayers}
+        isSelectable={false}
       />
       <Navigation />
     </StyledDiv>

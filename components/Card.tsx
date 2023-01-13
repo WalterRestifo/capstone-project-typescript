@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { CldImage } from "next-cloudinary";
+import { MiniPlayer } from "../interfaces/interfaces";
+import { nanoid } from "nanoid";
 
 type CardProps = {
   name: string;
@@ -7,6 +9,7 @@ type CardProps = {
   languages: string[];
   gender: string;
   skill: string;
+  isSelectable: boolean;
 };
 
 export default function Card({
@@ -15,7 +18,27 @@ export default function Card({
   languages,
   gender,
   skill,
+  isSelectable,
 }: CardProps): JSX.Element {
+  function handleTeamSelection(newPlayer: MiniPlayer) {
+    const team = localStorage.getItem("newTeam");
+    if (team) {
+      const teamObj = JSON.parse(team);
+      teamObj.players.push(newPlayer);
+      localStorage.setItem("newTeam", JSON.stringify(teamObj));
+    } else {
+      const newTeam = {
+        players: [newPlayer],
+        points: 0,
+        games: 0,
+        wins: 0,
+        id: nanoid(),
+      };
+      localStorage.setItem("newTeam", JSON.stringify(newTeam));
+    }
+  }
+
+  const player = { name: name, cloudinarySrc: cloudinarySrc };
   return (
     <StyledDiv>
       <CldImage width="80" height="80" src={cloudinarySrc} alt={name} />
@@ -27,6 +50,10 @@ export default function Card({
           return <li key={language}>{language}</li>;
         })}
       </ul>
+
+      {isSelectable && (
+        <button onClick={() => handleTeamSelection(player)}>add to team</button>
+      )}
     </StyledDiv>
   );
 }
