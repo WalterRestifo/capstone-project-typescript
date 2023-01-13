@@ -1,8 +1,5 @@
-import getAllTeams from "./getAllTeams";
-
 export default async function removeTeam(id: string) {
-  await fetch("./api/questions/" + id, {
+  await fetch("./api/teams/" + id, {
     method: "DELETE",
   });
-  getAllTeams();
 }

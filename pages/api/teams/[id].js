@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       const team = await Team.findById(id);
 
       res.status(200).json({
-        id: team.id,
+        id: team._id,
         wins: team.wins,
         games: team.games,
         players: team.players,

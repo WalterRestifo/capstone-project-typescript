@@ -5,6 +5,7 @@ import Link from "next/link";
 import MiniCard from "../components/MiniCard";
 import { useEffect, useState } from "react";
 import { MiniPlayer, Team } from "../interfaces/interfaces";
+import updateTeam from "../utils/updateTeam";
 
 export default function ScoreForm(): JSX.Element {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -40,21 +41,49 @@ export default function ScoreForm(): JSX.Element {
   async function handleSubmit(event: any) {
     event.preventDefault();
     const form = event.currentTarget;
-    const pointsTeam1 = form.elements.pointsTeam1.value;
-    const pointsTeam2 = form.elements.pointsTeam2.value;
+    const pointsTeam1 = parseInt(form.elements.pointsTeam1.value);
+    const pointsTeam2 = parseInt(form.elements.pointsTeam2.value);
     setIsSubmitted(true);
+    const team1Obj = team1;
+    const team2Obj = team2;
+    let winner = "";
+    if (pointsTeam1 > pointsTeam2) {
+      team1Obj.wins += 1;
+      winner = "Team 1";
+    } else if (pointsTeam1 < pointsTeam2) {
+      team2Obj.wins += 1;
+      winner = "Team 2";
+    } else {
+      return alert("Please enter a valid score");
+    }
+    team1Obj.games += 1;
+    team2Obj.games += 1;
+    team1Obj.points += pointsTeam1;
+    team2Obj.points += pointsTeam2;
 
-    const team1WithLastGamePoints = { ...team1, lastGamePoints: pointsTeam1 };
-    localStorage.setItem(
-      "team1WithLastGamePoints",
-      JSON.stringify(team1WithLastGamePoints)
-    );
+    async function postMatch(match: object) {
+      try {
+        await fetch("/api/matches", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(match),
+        });
+      } catch (error) {
+        console.error(
+          "Something went wrong with the post fetch of a matches in /scoreForm: ",
+          error
+        );
+      }
+    }
+    postMatch({ team1: team1Obj, team2: team2Obj, winner: winner });
 
-    const team2WithLastGamePoints = { ...team2, lastGamePoints: pointsTeam2 };
-    localStorage.setItem(
-      "team2WithLastGamePoints",
-      JSON.stringify(team2WithLastGamePoints)
-    );
+    async function updateTeams() {
+      updateTeam(team1Obj);
+      updateTeam(team2Obj);
+    }
+    updateTeams();
   }
 
   return (
@@ -69,7 +98,8 @@ export default function ScoreForm(): JSX.Element {
         <StyledFormDiv>
           <div>
             <StyledP>Team 1</StyledP>
-            {team1.players.length > 0 &&
+            {team1 &&
+              team1.players.length > 0 &&
               team1.players.map((player: MiniPlayer) => {
                 return (
                   <MiniCard
@@ -79,6 +109,7 @@ export default function ScoreForm(): JSX.Element {
                   />
                 );
               })}
+
             <label htmlFor="pointsTeam1">Points: </label>
             <StyledInput
               type="number"
@@ -88,7 +119,9 @@ export default function ScoreForm(): JSX.Element {
               aria-label="points for Team 1"
             />
           </div>
+
           <p>VS</p>
+
           <div>
             <StyledP>Team 2</StyledP>
             {team2 &&

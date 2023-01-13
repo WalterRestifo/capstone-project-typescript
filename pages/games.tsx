@@ -3,78 +3,21 @@ import Header from "../components/Header";
 import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Link from "next/link";
-import { Team } from "../interfaces/interfaces";
+import { Team, Match } from "../interfaces/interfaces";
 import { useEffect, useState } from "react";
 import TeamComponent from "../components/TeamComponent";
-import updateTeam from "../utils/updateTeam";
 
 export default function Games(): JSX.Element {
-  const [matches, setMatches] = useState([]);
+  const [matches, setMatches] = useState<[Match]>();
 
   useEffect(() => {
-    const matchesFromLocalStorage = localStorage.getItem("matches");
-    if (matchesFromLocalStorage) {
-      setMatches(JSON.parse(matchesFromLocalStorage));
+    async function getMatches() {
+      const response = await fetch("/api/matches");
+      const data: [Match] = await response.json();
+      setMatches(data);
     }
+    getMatches();
   }, []);
-
-  useEffect(() => {
-    const team1WithLastGamePoints = localStorage.getItem(
-      "team1WithLastGamePoints"
-    );
-    const team2WithLastGamePoints = localStorage.getItem(
-      "team2WithLastGamePoints"
-    );
-    if (team1WithLastGamePoints && team2WithLastGamePoints) {
-      const team1Obj = JSON.parse(team1WithLastGamePoints);
-      const team2Obj = JSON.parse(team2WithLastGamePoints);
-      team1Obj.lastGamePoints = parseInt(team1Obj.lastGamePoints);
-      team2Obj.lastGamePoints = parseInt(team2Obj.lastGamePoints);
-
-      if (team1Obj.lastGamePoints > team2Obj.lastGamePoints) {
-        team1Obj.wins += 1;
-      } else {
-        team2Obj.wins += 1;
-      }
-      team1Obj.games += 1;
-      team2Obj.games += 1;
-      team1Obj.points += parseInt(team1Obj.lastGamePoints);
-      team2Obj.points += parseInt(team2Obj.lastGamePoints);
-
-      updateTeam(team1Obj);
-      updateTeam(team2Obj);
-
-      const jsonMatchesFromLocalStorage = localStorage.getItem("matches");
-      if (jsonMatchesFromLocalStorage) {
-        const matchesFromLocalStorage = JSON.parse(jsonMatchesFromLocalStorage);
-        console.log(
-          "matches wurde im localstorage gefunden: ",
-          matchesFromLocalStorage
-        );
-
-        const updatedMatches = [
-          ...matchesFromLocalStorage,
-          {
-            teams: [team1Obj, team2Obj],
-            matchId: matchesFromLocalStorage.length + 1,
-          },
-        ];
-        localStorage.setItem("matches", JSON.stringify(updatedMatches));
-        setMatches(updatedMatches);
-      } else {
-        console.log("matches wurde im localstorage nicht gefunden ");
-        localStorage.setItem(
-          "matches",
-          JSON.stringify([{ teams: [team1Obj, team2Obj], matchId: 1 }])
-        );
-        setMatches([{ teams: [team1Obj, team2Obj], matchId: 1 }]);
-      }
-    }
-  }, []);
-
-  function handleDelete() {
-    setMatches([]);
-  }
 
   function handleEmptyLocalStorage() {
     localStorage.removeItem("team1");
@@ -82,11 +25,6 @@ export default function Games(): JSX.Element {
     localStorage.removeItem("team1WithLastGamePoints");
     localStorage.removeItem("team2WithLastGamePoints");
   }
-
-  // function handleDeleteMatches() {
-  //   delete all matches from the databank
-
-  // }
 
   return (
     <StyledDiv>
@@ -98,19 +36,13 @@ export default function Games(): JSX.Element {
       <Header teaser={"Games"} />
       <section>
         {matches &&
-          matches.map((match: []) => {
+          matches.map((match: Match, index: number) => {
             return (
-              <div key={match.matchId}>
-                <p>{match.matchId}</p>
-                {match.teams.map((team: Team) => {
-                  return (
-                    <TeamComponent
-                      team={team}
-                      key={team.id}
-                      isClickable={false}
-                    />
-                  );
-                })}
+              <div key={match.id}>
+                <p>Match {index + 1}</p>
+                <TeamComponent team={match.team1} isClickable={false} />
+                <TeamComponent team={match.team2} isClickable={false} />
+                <p>Winner: {match.winner}</p>
               </div>
             );
           })}
@@ -119,7 +51,6 @@ export default function Games(): JSX.Element {
         <button onClick={handleEmptyLocalStorage}>
           <Link href={"/teamChoice"}>Add a new game</Link>
         </button>
-        <button onClick={handleDelete}>Delete all games</button>
       </section>
       <Navigation />
     </StyledDiv>

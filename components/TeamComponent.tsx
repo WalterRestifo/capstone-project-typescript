@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { MiniPlayer, Team } from "../interfaces/interfaces";
 import { useState } from "react";
 import MiniCard from "./MiniCard";
+import removeTeam from "../utils/removeTeam";
 
 type TeamProps = {
   team: Team;
@@ -13,6 +14,20 @@ export default function TeamComponent({
   isClickable,
 }: TeamProps): JSX.Element {
   const [isSelected, setIsSelected] = useState(false);
+
+  function handleAddTeam1() {
+    const team1 = localStorage.getItem("team1");
+    if (!team1) {
+      localStorage.setItem("team1", JSON.stringify(team));
+    }
+  }
+
+  function handleAddTeam2() {
+    const team2 = localStorage.getItem("team2");
+    if (!team2) {
+      localStorage.setItem("team2", JSON.stringify(team));
+    }
+  }
 
   return (
     <StyledTeam onClick={() => setIsSelected(!isSelected)} key={team.id}>
@@ -28,16 +43,9 @@ export default function TeamComponent({
       <p>TotalPoints: {team.points}</p>
       {isSelected && isClickable && (
         <>
-          <button
-            onClick={() => localStorage.setItem("team1", JSON.stringify(team))}
-          >
-            Team 1
-          </button>
-          <button
-            onClick={() => localStorage.setItem("team2", JSON.stringify(team))}
-          >
-            Team 2
-          </button>
+          <button onClick={handleAddTeam1}>Team 1</button>
+          <button onClick={handleAddTeam2}>Team 2</button>
+          <button onClick={() => removeTeam(team.id)}>delete Team</button>
         </>
       )}
     </StyledTeam>

@@ -5,7 +5,6 @@ import Header from "../components/Header";
 import { Team } from "../interfaces/interfaces";
 import Link from "next/link";
 import TeamComponent from "../components/TeamComponent";
-import postTeam from "../utils/postTeam";
 
 export default function TeamChoiceForm(): JSX.Element {
   const [teams, setTeams] = useState<[Team]>([
@@ -33,6 +32,7 @@ export default function TeamChoiceForm(): JSX.Element {
           return <TeamComponent team={team} key={team.id} isClickable={true} />;
         })}
       </section>
+      {}
       <button>
         <Link href={"/scoreForm"}>Continue</Link>
       </button>

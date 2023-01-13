@@ -25,3 +25,10 @@ export interface Team {
   wins: number;
   games: number;
 }
+
+export interface Match {
+  team1: Team;
+  team2: Team;
+  id: string;
+  winner: string;
+}
