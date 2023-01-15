@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { Team } from "../interfaces/interfaces";
 import Link from "next/link";
 import TeamComponent from "../components/TeamComponent";
+import styled from "styled-components";
 
 export default function TeamChoiceForm(): JSX.Element {
   const [teams, setTeams] = useState<[Team]>([
@@ -28,13 +29,21 @@ export default function TeamChoiceForm(): JSX.Element {
       </Head>
       <Header teaser={"Teams"} />
       <section>
-        {teams.map((team) => {
-          return <TeamComponent team={team} key={team.id} isClickable={true} />;
-        })}
+        <StyledUl data-cy="team-list">
+          {teams.map((team) => {
+            return (
+              <li key={team.id}>
+                <TeamComponent team={team} isClickable={true} />
+              </li>
+            );
+          })}
+        </StyledUl>
       </section>
-      {}
+
       <button>
-        <Link href={"/scoreForm"}>Continue</Link>
+        <Link href={"/scoreForm"} data-cy="scoreForm-navigation">
+          Continue
+        </Link>
       </button>
       <button>
         <Link href={"/teamChoiceForm"}>Create a new team</Link>
@@ -45,3 +54,6 @@ export default function TeamChoiceForm(): JSX.Element {
     </>
   );
 }
+const StyledUl = styled.ul`
+  list-style-type: none;
+`;

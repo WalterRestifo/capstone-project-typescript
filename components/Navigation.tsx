@@ -4,7 +4,9 @@ import styled from "styled-components";
 export default function Navigation(): JSX.Element {
   return (
     <StyledNav>
-      <StyledLink href={"/newUserForm"}>create a profile</StyledLink>
+      <StyledLink data-cy="newUserForm-navigation" href={"/newUserForm"}>
+        create a profile
+      </StyledLink>
       <StyledLink href={"/games"}>Competitions</StyledLink>
       <StyledLink href={"/"}>Home</StyledLink>
     </StyledNav>

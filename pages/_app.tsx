@@ -10,34 +10,11 @@ export default function App({ Component, pageProps }: AppProps) {
     gender: "Anything will do",
   });
 
-  const [allPlayers, setAllPlayers] = useState<Member[]>([]);
-
-  async function getAllPlayers(): Promise<void> {
-    try {
-      const response = await fetch("/api/players");
-      if (!response.ok) {
-        return console.error(
-          "Error with the response of the players fetch. Response status: ",
-          response.status
-        );
-      } else {
-        const listOfAllPlayers = await response.json();
-        setAllPlayers(listOfAllPlayers);
-      }
-    } catch (error) {
-      console.error("Something went wrong with the players fetch: ", error);
-    }
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getAllPlayers();
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   // useEffect(() => {
-  //   getAllPlayers();
+  //   const interval = setInterval(() => {
+  //     getAllPlayers();
+  //   }, 1000);
+  //   return () => clearInterval(interval);
   // }, []);
 
   return (
@@ -45,8 +22,6 @@ export default function App({ Component, pageProps }: AppProps) {
       {...pageProps}
       desiredPlayer={desiredPlayer}
       setDesiredPlayer={setDesiredPlayer}
-      allPlayers={allPlayers}
-      setAllPlayers={setAllPlayers}
     />
   );
 }

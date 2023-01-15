@@ -3,7 +3,7 @@ export interface Member {
   skill: string;
   languages: string[];
   gender: string;
-  _id?: any;
+  id?: any;
   cloudinarySrc: string;
 }
 

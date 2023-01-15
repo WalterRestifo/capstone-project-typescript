@@ -10,14 +10,22 @@ import TeamComponent from "../components/TeamComponent";
 export default function Games(): JSX.Element {
   const [matches, setMatches] = useState<[Match]>();
 
+  async function getMatches() {
+    const response = await fetch("/api/matches");
+    const data: [Match] = await response.json();
+    setMatches(data);
+  }
+
   useEffect(() => {
-    async function getMatches() {
-      const response = await fetch("/api/matches");
-      const data: [Match] = await response.json();
-      setMatches(data);
-    }
     getMatches();
   }, []);
+
+  async function handleDeleteMatch(id: string) {
+    await fetch(`/api/matches/${id}`, {
+      method: "DELETE",
+    });
+    getMatches();
+  }
 
   function handleEmptyLocalStorage() {
     localStorage.removeItem("team1");
@@ -35,20 +43,31 @@ export default function Games(): JSX.Element {
       </Head>
       <Header teaser={"Games"} />
       <section>
-        {matches &&
-          matches.map((match: Match, index: number) => {
-            return (
-              <div key={match.id}>
-                <p>Match {index + 1}</p>
-                <TeamComponent team={match.team1} isClickable={false} />
-                <TeamComponent team={match.team2} isClickable={false} />
-                <p>Winner: {match.winner}</p>
-              </div>
-            );
-          })}
+        <StyledUl data-cy="match-list">
+          {matches &&
+            matches.map((match: Match, index: number) => {
+              return (
+                <li key={match.id}>
+                  <p>Match {index + 1}</p>
+                  <TeamComponent team={match.team1} isClickable={false} />
+                  <TeamComponent team={match.team2} isClickable={false} />
+                  <p>Winner: {match.winner}</p>
+                  <button
+                    data-cy="delete-match-button"
+                    onClick={() => handleDeleteMatch(match.id)}
+                  >
+                    delete match
+                  </button>
+                </li>
+              );
+            })}
+        </StyledUl>
       </section>
       <section>
-        <button onClick={handleEmptyLocalStorage}>
+        <button
+          data-cy="teamChoice-navigation"
+          onClick={handleEmptyLocalStorage}
+        >
           <Link href={"/teamChoice"}>Add a new game</Link>
         </button>
       </section>
@@ -64,8 +83,6 @@ const StyledDiv = styled.div`
   padding: 0;
 `;
 
-const StyledTeam = styled.div`
-  border: 1px solid white;
-  display: flex;
-  flex-wrap: wrap;
+const StyledUl = styled.ul`
+  list-style-type: none;
 `;

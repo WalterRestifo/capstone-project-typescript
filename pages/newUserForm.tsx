@@ -76,7 +76,7 @@ export default function NewUserForm(): JSX.Element {
   return (
     <StyledNewUserFormDiv>
       <Header teaser={"New Player"} />
-      <StyledMain>
+      <StyledMain data-cy="new-user-form-main-element">
         <StyledP>
           Create your profile here and share your abilities! Please begin with
           uploading your profile picture.
@@ -92,14 +92,17 @@ export default function NewUserForm(): JSX.Element {
               id="username"
               maxLength={10}
               placeholder="Your name"
+              data-cy="username-input"
               required
             />
             <DropdownMenu
+              dataCy={"skill-select-new-user"}
               options={skillOptions}
               criteria={"skill"}
               onChange={handleChangeSkill}
             />
             <DropdownMenu
+              dataCy={"gender-select-new-user"}
               options={genderOptions}
               criteria={"gender"}
               onChange={handleChangeGender}
@@ -120,11 +123,15 @@ export default function NewUserForm(): JSX.Element {
               );
             })}
 
-            <StyledSubmitButton>Submit</StyledSubmitButton>
+            <StyledSubmitButton data-cy="submit-newUserForm">
+              Submit
+            </StyledSubmitButton>
           </StyledForm>
         </StyledDropdownMenuWrapper>
-        <p>{isSubmitted && "Your profile was created successfully! 🥳"}</p>
-        <StyledLink href={"/"}>back to the main page</StyledLink>
+        <p>{isSubmitted && "Your profile was created successfully!"}</p>
+        <StyledLink data-cy="back-to-homepage-navigation" href={"/"}>
+          back to the main page
+        </StyledLink>
       </StyledMain>
     </StyledNewUserFormDiv>
   );

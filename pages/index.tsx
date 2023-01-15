@@ -4,20 +4,40 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import { Criteria, Member } from "../interfaces/interfaces";
 import Navigation from "../components/Navigation";
+import { useEffect, useState } from "react";
 
 type HomeProps = {
   desiredPlayer: Criteria;
   setDesiredPlayer: any;
-  allPlayers: Member[];
-  setAllPlayers: any;
 };
 
 export default function Home({
   desiredPlayer,
   setDesiredPlayer,
-  allPlayers,
-  setAllPlayers,
 }: HomeProps): JSX.Element {
+  const [allPlayers, setAllPlayers] = useState<Member[]>([]);
+
+  async function getAllPlayers(): Promise<void> {
+    try {
+      const response = await fetch("/api/players");
+      if (!response.ok) {
+        return console.error(
+          "Error with the response of the players fetch. Response status: ",
+          response.status
+        );
+      } else {
+        const listOfAllPlayers = await response.json();
+        setAllPlayers(listOfAllPlayers);
+      }
+    } catch (error) {
+      console.error("Something went wrong with the players fetch: ", error);
+    }
+  }
+
+  useEffect(() => {
+    getAllPlayers();
+  }, []);
+
   return (
     <StyledDiv>
       <Head>
