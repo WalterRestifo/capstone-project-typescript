@@ -1,6 +1,6 @@
 ## Hello guys! 👋
 
-This is actually an app that tracks matches of a group of volleyball players.
+This is actually an app for mobile phones that tracks matches of a group of volleyball players.
 
 You can create a new profile, upload a profile picture, submit a simple form, and you are in the pool of all the players. 
 
