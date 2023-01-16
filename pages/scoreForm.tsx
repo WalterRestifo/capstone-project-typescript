@@ -94,9 +94,9 @@ export default function ScoreForm(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header teaser={"Scores"} />
-      <StyledForm onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit} data-cy="scoreForm">
         <StyledFormDiv>
-          <div>
+          <div data-cy="team-1-wrapper">
             <StyledP>Team 1</StyledP>
             {team1 &&
               team1.players.length > 0 &&
@@ -115,6 +115,7 @@ export default function ScoreForm(): JSX.Element {
               type="number"
               name="pointsTeam1"
               id="pointsTeam1"
+              data-cy="team-1-score-input"
               maxLength={2}
               aria-label="points for Team 1"
             />
@@ -122,7 +123,7 @@ export default function ScoreForm(): JSX.Element {
 
           <p>VS</p>
 
-          <div>
+          <div data-cy="team-2-wrapper">
             <StyledP>Team 2</StyledP>
             {team2 &&
               team2.players.map((player: MiniPlayer) => {
@@ -139,14 +140,21 @@ export default function ScoreForm(): JSX.Element {
               type="number"
               name="pointsTeam2"
               id="pointsTeam2"
+              data-cy="team-2-score-input"
               maxLength={2}
               aria-label="points for Team 2"
             />
           </div>
         </StyledFormDiv>
-        {!isSubmitted && <button type="submit">save</button>}
+        {!isSubmitted && (
+          <button type="submit" data-cy="submit-scoreForm">
+            save
+          </button>
+        )}
         <button>
-          <Link href={"/games"}>back</Link>
+          <Link href={"/games"} data-cy="back-to-games-page-navigation">
+            back
+          </Link>
         </button>
       </StyledForm>
     </StyledDiv>

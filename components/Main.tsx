@@ -37,28 +37,31 @@ export default function Main({
   return (
     <StyledMain>
       <StyledDropdownMenuWrapper>
-        <StyledForm>
+        <StyledForm data-cy="selection-form">
           <DropdownMenu
             options={skill}
             criteria={"skill"}
             onChange={handleChange}
+            dataCy={"skill-select"}
           />
           <DropdownMenu
             options={language}
             //cannot use criteria={languages} because it will brake the filter function
             criteria={"language"}
             onChange={handleChange}
+            dataCy={"language-select"}
           />
           <DropdownMenu
             options={gender}
             criteria={"gender"}
             onChange={handleChange}
+            dataCy={"gender-select"}
           />
         </StyledForm>
       </StyledDropdownMenuWrapper>
-      <StyledCardsWrapperSection>
+      <StyledCardsWrapperSection data-cy="player-list">
         {matchedPlayers.map(
-          ({ name, cloudinarySrc, gender, languages, skill }) => {
+          ({ name, cloudinarySrc, gender, languages, skill, id }) => {
             return (
               <Card
                 key={name}
@@ -67,6 +70,7 @@ export default function Main({
                 skill={skill}
                 languages={languages}
                 gender={gender}
+                id={id}
                 isSelectable={isSelectable}
               />
             );

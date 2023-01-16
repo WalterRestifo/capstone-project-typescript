@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Member } from "../interfaces/interfaces";
 import Head from "next/head";
 import Header from "../components/Header";

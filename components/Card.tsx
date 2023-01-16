@@ -9,6 +9,7 @@ type CardProps = {
   languages: string[];
   gender: string;
   skill: string;
+  id: string;
   isSelectable: boolean;
 };
 
@@ -18,6 +19,7 @@ export default function Card({
   languages,
   gender,
   skill,
+  id,
   isSelectable,
 }: CardProps): JSX.Element {
   function handleTeamSelection(newPlayer: MiniPlayer) {
@@ -38,6 +40,12 @@ export default function Card({
     }
   }
 
+  async function handleDeletePlayer(id: string) {
+    await fetch("./api/players/" + id, {
+      method: "DELETE",
+    });
+  }
+
   const player = { name: name, cloudinarySrc: cloudinarySrc };
   return (
     <StyledDiv>
@@ -50,7 +58,12 @@ export default function Card({
           return <li key={language}>{language}</li>;
         })}
       </ul>
-
+      <StyledDeleteButton
+        data-cy="delete-user-button"
+        onClick={() => handleDeletePlayer(id)}
+      >
+        delete player
+      </StyledDeleteButton>
       {isSelectable && (
         <button onClick={() => handleTeamSelection(player)}>add to team</button>
       )}
@@ -78,4 +91,8 @@ const StyledDiv = styled.div`
     color: #0070f3;
     border-color: #0070f3;
   }
+`;
+
+const StyledDeleteButton = styled.button`
+  display: none;
 `;

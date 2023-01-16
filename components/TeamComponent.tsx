@@ -43,8 +43,12 @@ export default function TeamComponent({
       <p>TotalPoints: {team.points}</p>
       {isSelected && isClickable && (
         <>
-          <button onClick={handleAddTeam1}>Team 1</button>
-          <button onClick={handleAddTeam2}>Team 2</button>
+          <button onClick={handleAddTeam1} data-cy="add-to-team-1-button">
+            Team 1
+          </button>
+          <button onClick={handleAddTeam2} data-cy="add-to-team-2-button">
+            Team 2
+          </button>
           <button onClick={() => removeTeam(team.id)}>delete Team</button>
         </>
       )}
