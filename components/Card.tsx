@@ -49,15 +49,16 @@ export default function Card({
   const player = { name: name, cloudinarySrc: cloudinarySrc };
   return (
     <StyledDiv>
-      <CldImage width="80" height="80" src={cloudinarySrc} alt={name} />
+      <StyledCldImage width="100" height="120" src={cloudinarySrc} alt={name} />
+
       <p>{name}</p>
       <p>{skill}</p>
       <p>{gender}</p>
-      <ul>
+      <StyledUl>
         {languages.map((language: string) => {
           return <li key={language}>{language}</li>;
         })}
-      </ul>
+      </StyledUl>
       <StyledDeleteButton
         data-cy="delete-user-button"
         onClick={() => handleDeletePlayer(id)}
@@ -72,27 +73,42 @@ export default function Card({
 }
 
 const StyledDiv = styled.div`
-  font-size: 1.25rem;
-  line-height: 0.8;
+  font-size: 20px;
+  line-height: 1.5;
   min-height: 317px;
   min-width: 200px;
   margin-left: 1.25rem;
   margin-right: 1.25rem;
   text-align: center;
-  color: inherit;
+  color: white;
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: scale 0.15s ease;
 
-  :hover,
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
   :focus,
   :active {
-    color: #0070f3;
-    border-color: #0070f3;
+    scale: 1.1;
   }
 `;
 
 const StyledDeleteButton = styled.button`
   display: none;
+`;
+
+const StyledUl = styled.ul`
+  list-style: none;
+`;
+
+const StyledCldImage = styled(CldImage)`
+  margin-top: 0.5em;
+  border-radius: 25px;
 `;

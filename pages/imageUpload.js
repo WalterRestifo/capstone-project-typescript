@@ -25,6 +25,7 @@ export default function Home() {
       body: formData,
     });
     const json = await response.json();
+    setImage(null);
     ownPlayerCard.cloudinarySrc = json.secure_url;
     setIsUploading(false);
     setIsUploaded(true);

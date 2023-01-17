@@ -81,6 +81,11 @@ const StyledDiv = styled.div`
   display: grid;
   grid-template-rows: 7rem auto 4rem;
   padding: 0;
+  background-image: url("/playergroup.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: bottom;
+  background-repeat: no-repeat;
 `;
 
 const StyledUl = styled.ul`

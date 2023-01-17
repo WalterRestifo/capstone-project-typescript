@@ -60,7 +60,11 @@ export default function Home({
 
 const StyledDiv = styled.div`
   height: 100vh;
-  display: grid;
-  grid-template-rows: 7rem auto 4rem;
-  padding: 0;
+  font-family: baloo_2;
+  background-image: url("/ball.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 20px;
 `;

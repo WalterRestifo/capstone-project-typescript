@@ -82,12 +82,11 @@ export default function Main({
 }
 
 const StyledMain = styled.main`
-  margin-left: 2rem;
-  margin-right: 2rem;
   display: grid;
   grid-template-rows: 8rem auto;
-  border: 1px solid white;
+
   overflow-y: scroll;
+  height: 71.5vh;
 `;
 
 const StyledCardsWrapperSection = styled.section`
@@ -97,11 +96,11 @@ const StyledCardsWrapperSection = styled.section`
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
-  background-color: black;
-  border: 1px solid white;
   padding-left: 3.1rem;
   padding-right: 3.1rem;
   height: fit-content;
+
+  color: white;
 `;
 
 const StyledForm = styled.form`

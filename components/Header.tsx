@@ -7,21 +7,15 @@ type HeaderProps = {
 export default function Header({ teaser }: HeaderProps): JSX.Element {
   return (
     <StyledHeader>
-      <StyledH1>MatchBall</StyledH1>
+      <h1>MatchBall</h1>
       <h2>{teaser}</h2>
     </StyledHeader>
   );
 }
 
 const StyledHeader = styled.header`
-  margin-left: 2rem;
-  margin-right: 2rem;
   text-align: center;
-  background-color: black;
-  border: 1px solid white;
-`;
+  padding-top: 10px;
 
-const StyledH1 = styled.h1`
-  margin: 0;
-  margin-top: 2vh;
+  color: white;
 `;
