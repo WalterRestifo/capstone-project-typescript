@@ -196,10 +196,6 @@ const StyledDiv = styled.div`
   position: relative;
 `;
 
-// const StyledHeader = styled.div`
-//   color: red !important;
-// `;
-
 const StyledForm = styled.form`
   margin-left: 2rem;
   margin-right: 2rem;
@@ -241,6 +237,8 @@ const StyledTeamWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  position: relative;
+  top: 3.5rem;
 `;
 
 const StyledButton = styled.button`
