@@ -38,10 +38,10 @@ describe("functional tests for the game page", () => {
         cy.wait(500);
         cy.get('[data-cy="team-1-wrapper"]')
           .children()
-          .should("have.length", 5);
+          .should("have.length", 4);
         cy.get('[data-cy="team-2-wrapper"]')
           .children()
-          .should("have.length", 5);
+          .should("have.length", 4);
 
         cy.get('[data-cy="team-1-score-input"]').type("21");
         cy.get('[data-cy="team-2-score-input"]').type("10");

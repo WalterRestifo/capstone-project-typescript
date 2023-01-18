@@ -2,6 +2,9 @@ import Link from "next/link";
 import { useState } from "react";
 import ImagePreview from "../components/PreviewImage";
 import { ownPlayerCard } from "../data/data";
+import styled from "styled-components";
+import Image from "next/image";
+import Header from "../components/Header";
 
 export default function Home() {
   const [image, setImage] = useState(null);
@@ -34,12 +37,12 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <h1>Image Upload</h1>
+    <StyledMain>
+      <Header teaser="Image upload" />
       <form onSubmit={handleFileUpload}>
-        <p>
+        <StyledP>
           <label htmlFor="avatar">Please choose an image</label>
-        </p>
+        </StyledP>
         <input
           type="file"
           id="avatar"
@@ -51,13 +54,63 @@ export default function Home() {
         />
 
         {image && <ImagePreview file={image} />}
-
-        <button type="submit">{isUploading ? "Uploading …" : "Upload"}</button>
+        {!isUploaded && (
+          <StyledButton type="submit">
+            {isUploading ? "Uploading …" : "Upload"}
+          </StyledButton>
+        )}
       </form>
-      {isUploaded && <p>Image uploaded successfully!</p>}
-      <button>
-        <Link href="/newUserForm">Back to profile </Link>
-      </button>
-    </main>
+      {isUploaded && (
+        <StyledUploadSuccess>Image uploaded successfully!</StyledUploadSuccess>
+      )}
+
+      <StyledLink href="/newUserForm">
+        <Image
+          alt="profile"
+          src={"/profile-white.svg"}
+          height={60}
+          width={60}
+        />
+      </StyledLink>
+    </StyledMain>
   );
 }
+
+const StyledMain = styled.main`
+  background-image: url("/netz-blur.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  height: 110vh;
+  width: 110vw;
+  color: white;
+  font-family: baloo_2;
+  text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  position: fixed;
+  bottom: 1%;
+  right: 5%;
+`;
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  padding: 1rem;
+  position: fixed;
+  bottom: 3.5%;
+  left: 42%;
+`;
+
+const StyledP = styled.p`
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+`;
+
+const StyledUploadSuccess = styled.p`
+  font-size: 25px;
+  position: relative;
+  top: 10%;
+`;

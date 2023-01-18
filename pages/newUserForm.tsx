@@ -155,8 +155,6 @@ export default function NewUserForm(): JSX.Element {
 
 const StyledNewUserFormDiv = styled.div`
   height: 100vh;
-  display: grid;
-  grid-template-rows: 5rem auto;
   font-family: baloo_2;
   background-image: url("/beachspielerin.jpg");
   background-size: cover;

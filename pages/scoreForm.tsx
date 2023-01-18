@@ -6,6 +6,7 @@ import MiniCard from "../components/MiniCard";
 import { useEffect, useState } from "react";
 import { MiniPlayer, Team } from "../interfaces/interfaces";
 import updateTeam from "../utils/updateTeam";
+import Image from "next/image";
 
 export default function ScoreForm(): JSX.Element {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -96,7 +97,7 @@ export default function ScoreForm(): JSX.Element {
       <Header teaser={"Scores"} />
       <StyledForm onSubmit={handleSubmit} data-cy="scoreForm">
         <StyledFormDiv>
-          <div data-cy="team-1-wrapper">
+          <StyledTeamWrapper data-cy="team-1-wrapper">
             <StyledP>Team 1</StyledP>
             {team1 &&
               team1.players.length > 0 &&
@@ -110,20 +111,22 @@ export default function ScoreForm(): JSX.Element {
                 );
               })}
 
-            <label htmlFor="pointsTeam1">Points: </label>
-            <StyledInput
-              type="number"
-              name="pointsTeam1"
-              id="pointsTeam1"
-              data-cy="team-1-score-input"
-              maxLength={2}
-              aria-label="points for Team 1"
-            />
-          </div>
+            <label htmlFor="pointsTeam1">
+              {"Points: "}
+              <StyledInput
+                type="number"
+                name="pointsTeam1"
+                id="pointsTeam1"
+                data-cy="team-1-score-input"
+                maxLength={2}
+                aria-label="points for Team 1"
+              />
+            </label>
+          </StyledTeamWrapper>
 
           <p>VS</p>
 
-          <div data-cy="team-2-wrapper">
+          <StyledTeamWrapper data-cy="team-2-wrapper">
             <StyledP>Team 2</StyledP>
             {team2 &&
               team2.players.map((player: MiniPlayer) => {
@@ -135,41 +138,69 @@ export default function ScoreForm(): JSX.Element {
                   />
                 );
               })}
-            <label htmlFor="pointsTeam2">Points: </label>
-            <StyledInput
-              type="number"
-              name="pointsTeam2"
-              id="pointsTeam2"
-              data-cy="team-2-score-input"
-              maxLength={2}
-              aria-label="points for Team 2"
-            />
-          </div>
+            <label htmlFor="pointsTeam2">
+              {"Points: "}
+              <StyledInput
+                type="number"
+                name="pointsTeam2"
+                id="pointsTeam2"
+                data-cy="team-2-score-input"
+                maxLength={2}
+                aria-label="points for Team 2"
+              />
+            </label>
+          </StyledTeamWrapper>
         </StyledFormDiv>
+
         {!isSubmitted && (
-          <button type="submit" data-cy="submit-scoreForm">
-            save
-          </button>
+          <StyledButton
+            type="submit"
+            data-cy="submit-scoreForm"
+            aria-label="submit score form"
+          >
+            <Image
+              src="/checkmark.svg"
+              alt="checkmark"
+              width={60}
+              height={60}
+            />
+          </StyledButton>
         )}
-        <button>
-          <Link href={"/games"} data-cy="back-to-games-page-navigation">
-            back
-          </Link>
-        </button>
       </StyledForm>
+      <StyledNav>
+        <Link href={"/games"} data-cy="back-to-games-page-navigation">
+          <Image
+            src="/arrow-back.svg"
+            alt="arrow back"
+            width={60}
+            height={60}
+          />
+        </Link>
+      </StyledNav>
     </StyledDiv>
   );
 }
 
 const StyledDiv = styled.div`
   height: 100vh;
-  display: grid;
-  grid-template-rows: 7rem auto;
   padding: 0;
+  height: 100vh;
+  font-family: baloo_2;
+  background-image: url("/scoreImageOrange.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  color: white;
+  position: relative;
 `;
 
+// const StyledHeader = styled.div`
+//   color: red !important;
+// `;
+
 const StyledForm = styled.form`
-  border: 1px solid #eaeaea;
   margin-left: 2rem;
   margin-right: 2rem;
 `;
@@ -178,7 +209,6 @@ const StyledFormDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #eaeaea;
 `;
 
 const StyledP = styled.p`
@@ -188,4 +218,41 @@ const StyledP = styled.p`
 const StyledInput = styled.input`
   width: 2rem;
   height: 2rem;
+`;
+
+const StyledNav = styled.nav`
+  display: flex;
+  justify-content: left;
+  position: fixed;
+  bottom: 0;
+  left: 7%;
+  width: 100vw;
+`;
+
+const StyledTeamWrapper = styled.div`
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const StyledButton = styled.button`
+  background-color: transparent;
+  border: none;
+  position: fixed;
+  bottom: 0.6rem;
+  left: 42%;
+  z-index: 1;
+  transition: scale 0.15s ease;
+
+  :active {
+    scale: 1.1;
+  }
 `;

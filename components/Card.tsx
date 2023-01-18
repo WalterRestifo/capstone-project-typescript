@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { CldImage } from "next-cloudinary";
 import { MiniPlayer } from "../interfaces/interfaces";
 import { nanoid } from "nanoid";
+import Image from "next/image";
 
 type CardProps = {
   name: string;
@@ -22,7 +23,11 @@ export default function Card({
   id,
   isSelectable,
 }: CardProps): JSX.Element {
-  function handleTeamSelection(newPlayer: MiniPlayer) {
+  function handleTeamSelection(
+    e: React.MouseEvent<HTMLElement>,
+    newPlayer: MiniPlayer
+  ) {
+    e.stopPropagation();
     const team = localStorage.getItem("newTeam");
     if (team) {
       const teamObj = JSON.parse(team);
@@ -66,7 +71,12 @@ export default function Card({
         delete player
       </StyledDeleteButton>
       {isSelectable && (
-        <button onClick={() => handleTeamSelection(player)}>add to team</button>
+        <StyledAddToTeamButton
+          aria-label="add to team"
+          onClick={(e) => handleTeamSelection(e, player)}
+        >
+          <Image src="/plus.svg" alt="plus" width={30} height={30} />
+        </StyledAddToTeamButton>
       )}
     </StyledDiv>
   );
@@ -84,7 +94,8 @@ const StyledDiv = styled.div`
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
-  transition: scale 0.15s ease;
+  /* transition: scale 0.15s ease; */
+  position: relative;
 
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.2);
@@ -94,10 +105,10 @@ const StyledDiv = styled.div`
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 
-  :focus,
+  /* :focus,
   :active {
     scale: 1.1;
-  }
+  } */
 `;
 
 const StyledDeleteButton = styled.button`
@@ -111,4 +122,18 @@ const StyledUl = styled.ul`
 const StyledCldImage = styled(CldImage)`
   margin-top: 0.5em;
   border-radius: 25px;
+`;
+
+const StyledAddToTeamButton = styled.button`
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5rem;
+  transition: scale 0.15s ease;
+  z-index: 2;
+  :active {
+    scale: 2;
+  }
 `;

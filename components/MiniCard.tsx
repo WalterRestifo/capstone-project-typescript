@@ -12,35 +12,31 @@ export default function MiniCard({
 }: CardProps): JSX.Element {
   return (
     <StyledDiv>
-      <CldImage
+      <StyledCldImage
         width="80"
         height="80"
         src={cloudinarySrc}
         alt="a profile image"
       />
-      <p>{name}</p>
+      <StyledP>{name}</StyledP>
     </StyledDiv>
   );
 }
 
 const StyledDiv = styled.div`
   font-size: 1.25rem;
-  margin: 0.5rem;
-
-  padding: 1.5rem;
+  color: white;
   padding-bottom: 0;
   text-align: center;
   color: inherit;
   text-decoration: none;
-  border: 1px solid #eaeaea;
   border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  width: 125px;
+`;
 
-  :hover,
-  :focus,
-  :active {
-    color: #0070f3;
-    border-color: #0070f3;
-  }
+const StyledCldImage = styled(CldImage)`
+  border-radius: 50%;
+`;
+
+const StyledP = styled.p`
+  color: white;
 `;

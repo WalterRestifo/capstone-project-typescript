@@ -8,7 +8,7 @@ export default function Header({ teaser }: HeaderProps): JSX.Element {
   return (
     <StyledHeader>
       <h1>MatchBall</h1>
-      <h2>{teaser}</h2>
+      <StyledH2>{teaser}</StyledH2>
     </StyledHeader>
   );
 }
@@ -18,4 +18,9 @@ const StyledHeader = styled.header`
   padding-top: 10px;
 
   color: white;
+`;
+
+const StyledH2 = styled.h2`
+  position: relative;
+  bottom: 17px;
 `;

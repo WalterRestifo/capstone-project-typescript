@@ -19,7 +19,7 @@ export default function Main({
   allPlayers,
   isSelectable,
 }: MainProps): JSX.Element {
-  const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
+  const matchedPlayers: Member[] = allPlayers?.filter((player: Member) => {
     return (
       (player.skill === desiredPlayer.skill ||
         desiredPlayer.skill === "Anything will do") &&
@@ -60,7 +60,7 @@ export default function Main({
         </StyledForm>
       </StyledDropdownMenuWrapper>
       <StyledCardsWrapperSection data-cy="player-list">
-        {matchedPlayers.map(
+        {matchedPlayers?.map(
           ({ name, cloudinarySrc, gender, languages, skill, id }) => {
             return (
               <Card
