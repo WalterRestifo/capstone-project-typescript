@@ -34,10 +34,22 @@ const StyledLink = styled(Link)`
   padding-top: 0.2em;
   border-radius: 25px;
   transition: scale 0.15s ease;
+  //nötig?
+  background: transparent;
+
+  Image:active {
+    background: transparent;
+  }
 
   :active {
     scale: 1.1;
+    background: transparent;
   }
+
+  :focus {
+    background: transparent;
+  }
+  //nötig?
 `;
 
 const StyledNav = styled.nav`
@@ -47,4 +59,5 @@ const StyledNav = styled.nav`
   bottom: 0;
   left: 7%;
   width: 100vw;
+  background: transparent;
 `;
