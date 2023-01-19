@@ -33,6 +33,22 @@ export default function TeamChoiceForm({
     }
   }
 
+  useEffect(() => {
+    async function rerenderPlayers() {
+      const response = await fetch("/api/players");
+      if (!response.ok) {
+        return console.error(
+          "Error with the response of the players fetch. Response status: ",
+          response.status
+        );
+      } else {
+        const listOfAllPlayers = await response.json();
+        setAllPlayers(listOfAllPlayers);
+      }
+    }
+    rerenderPlayers();
+  }, []);
+
   return (
     <StyledDiv>
       <Image
