@@ -54,7 +54,13 @@ export default function Card({
   const player = { name: name, cloudinarySrc: cloudinarySrc };
   return (
     <StyledDiv>
-      <StyledCldImage width="100" height="120" src={cloudinarySrc} alt={name} />
+      <StyledCldImage
+        width="100"
+        height="120"
+        src={cloudinarySrc}
+        alt={name}
+        priority={true}
+      />
 
       <p>{name}</p>
       <p>{skill}</p>

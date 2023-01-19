@@ -19,16 +19,18 @@ export default function Main({
   allPlayers,
   isSelectable,
 }: MainProps): JSX.Element {
-  const matchedPlayers: Member[] = allPlayers?.filter((player: Member) => {
-    return (
-      (player.skill === desiredPlayer.skill ||
-        desiredPlayer.skill === "Anything will do") &&
-      (player.languages.indexOf(desiredPlayer.language) !== -1 ||
-        desiredPlayer.language === "Anything will do") &&
-      (player.gender === desiredPlayer.gender ||
-        desiredPlayer.gender === "Anything will do")
-    );
-  });
+  const matchedPlayers: Member[] = allPlayers
+    ?.filter((player: Member) => {
+      return (
+        (player.skill === desiredPlayer.skill ||
+          desiredPlayer.skill === "Anything will do") &&
+        (player.languages.indexOf(desiredPlayer.language) !== -1 ||
+          desiredPlayer.language === "Anything will do") &&
+        (player.gender === desiredPlayer.gender ||
+          desiredPlayer.gender === "Anything will do")
+      );
+    })
+    .reverse();
 
   function handleChange(criteria: string, value: string) {
     setDesiredPlayer({ ...desiredPlayer, [criteria]: value });
