@@ -19,16 +19,18 @@ export default function Main({
   allPlayers,
   isSelectable,
 }: MainProps): JSX.Element {
-  const matchedPlayers: Member[] = allPlayers.filter((player: Member) => {
-    return (
-      (player.skill === desiredPlayer.skill ||
-        desiredPlayer.skill === "Anything will do") &&
-      (player.languages.indexOf(desiredPlayer.language) !== -1 ||
-        desiredPlayer.language === "Anything will do") &&
-      (player.gender === desiredPlayer.gender ||
-        desiredPlayer.gender === "Anything will do")
-    );
-  });
+  const matchedPlayers: Member[] = allPlayers
+    ?.filter((player: Member) => {
+      return (
+        (player.skill === desiredPlayer.skill ||
+          desiredPlayer.skill === "Anything will do") &&
+        (player.languages.indexOf(desiredPlayer.language) !== -1 ||
+          desiredPlayer.language === "Anything will do") &&
+        (player.gender === desiredPlayer.gender ||
+          desiredPlayer.gender === "Anything will do")
+      );
+    })
+    .reverse();
 
   function handleChange(criteria: string, value: string) {
     setDesiredPlayer({ ...desiredPlayer, [criteria]: value });
@@ -60,7 +62,7 @@ export default function Main({
         </StyledForm>
       </StyledDropdownMenuWrapper>
       <StyledCardsWrapperSection data-cy="player-list">
-        {matchedPlayers.map(
+        {matchedPlayers?.map(
           ({ name, cloudinarySrc, gender, languages, skill, id }) => {
             return (
               <Card
@@ -82,12 +84,11 @@ export default function Main({
 }
 
 const StyledMain = styled.main`
-  margin-left: 2rem;
-  margin-right: 2rem;
   display: grid;
   grid-template-rows: 8rem auto;
-  border: 1px solid white;
+
   overflow-y: scroll;
+  height: 71.5vh;
 `;
 
 const StyledCardsWrapperSection = styled.section`
@@ -97,11 +98,11 @@ const StyledCardsWrapperSection = styled.section`
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
-  background-color: black;
-  border: 1px solid white;
   padding-left: 3.1rem;
   padding-right: 3.1rem;
   height: fit-content;
+
+  color: white;
 `;
 
 const StyledForm = styled.form`

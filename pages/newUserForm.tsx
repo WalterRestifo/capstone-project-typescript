@@ -5,6 +5,7 @@ import { skill, language, gender } from "../data/data";
 import Link from "next/link";
 import { useState } from "react";
 import { ownPlayerCard } from "../data/data";
+import Image from "next/image";
 
 export default function NewUserForm(): JSX.Element {
   const skillOptions = skill.slice(1);
@@ -77,15 +78,22 @@ export default function NewUserForm(): JSX.Element {
     <StyledNewUserFormDiv>
       <Header teaser={"New Player"} />
       <StyledMain data-cy="new-user-form-main-element">
-        <StyledP>
-          Create your profile here and share your abilities! Please begin with
-          uploading your profile picture.
-        </StyledP>
         <StyledDropdownMenuWrapper>
           <StyledForm onSubmit={handleSubmit}>
-            <button>
-              <Link href="imageUpload">upload your profile picture!</Link>
-            </button>
+            <label htmlFor="uploadButton">
+              upload your profile picture:
+              <StyledButton id="uploadButton">
+                <Link href="imageUpload">
+                  <Image
+                    alt="cloud upload"
+                    src="/cloudUpload.svg"
+                    height={40}
+                    width={40}
+                  />
+                </Link>
+              </StyledButton>
+            </label>
+
             <label htmlFor="username">Your name (max 10 characters):</label>
             <input
               name="username"
@@ -111,7 +119,7 @@ export default function NewUserForm(): JSX.Element {
             {languageOptions.map((language, index) => {
               return (
                 <label key={language + index}>
-                  {language}
+                  {language + " " + " "}
                   <input
                     type={"checkbox"}
                     name="language"
@@ -122,15 +130,23 @@ export default function NewUserForm(): JSX.Element {
                 </label>
               );
             })}
-
-            <StyledSubmitButton data-cy="submit-newUserForm">
-              Submit
-            </StyledSubmitButton>
+            {!isSubmitted && (
+              <StyledSubmitButton data-cy="submit-newUserForm">
+                Submit
+              </StyledSubmitButton>
+            )}
           </StyledForm>
         </StyledDropdownMenuWrapper>
-        <p>{isSubmitted && "Your profile was created successfully!"}</p>
+        <StyledP>
+          {isSubmitted && "Your profile was created successfully!"}
+        </StyledP>
         <StyledLink data-cy="back-to-homepage-navigation" href={"/"}>
-          back to the main page
+          <Image
+            alt="Home"
+            src="/webpagehome-white.svg"
+            height={55}
+            width={55}
+          />
         </StyledLink>
       </StyledMain>
     </StyledNewUserFormDiv>
@@ -139,13 +155,17 @@ export default function NewUserForm(): JSX.Element {
 
 const StyledNewUserFormDiv = styled.div`
   height: 100vh;
-  display: grid;
-  grid-template-rows: 10rem auto;
+  font-family: baloo_2;
+  background-image: url("/beachspielerin.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 20px;
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
-  background-color: black;
-  border: 1px solid white;
+  color: white;
 `;
 
 const StyledForm = styled.form`
@@ -158,12 +178,6 @@ const StyledForm = styled.form`
   gap: 1rem;
 `;
 
-const StyledP = styled.p`
-  text-align: center;
-  border: 1px solid white;
-  margin: 0;
-`;
-
 const StyledMain = styled.main`
   margin-left: 2rem;
   margin-right: 2rem;
@@ -172,19 +186,38 @@ const StyledMain = styled.main`
 const StyledSubmitButton = styled.button`
   height: 7vh;
   width: 30vw;
+  border-radius: 25px;
 `;
 
 const StyledLink = styled(Link)`
-  height: 10vh;
-  width: 40vw;
-  background-color: lightgray;
-  color: black;
-  text-align: center;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  position: sticky;
+  position: fixed;
   bottom: 0;
-  left: 27%;
+  left: 7%;
+  height: 10vh;
+  width: 30vw;
+  border-radius: 25px;
+  transition: scale 0.15s ease;
+
+  :active {
+    scale: 1.1;
+  }
+`;
+
+const StyledButton = styled.button`
+  border-radius: 25px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  position: relative;
+  left: 1em;
+  top: 1em;
+`;
+
+const StyledP = styled.p`
+  color: white;
+  font-size: 20px;
+  position: fixed;
+  bottom: 1%;
+  left: 38%;
 `;

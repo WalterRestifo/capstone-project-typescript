@@ -15,7 +15,13 @@ export default function ImagePreview({
       height={100}
       src={src}
       alt="profile picture"
-      style={{ position: "relative", height, width, margin: "0 0 2rem 0" }}
+      style={{
+        position: "relative",
+        height,
+        width,
+        margin: "0 0 2rem 0",
+        objectFit,
+      }}
     />
   );
 }

@@ -1,27 +1,43 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 type HeaderProps = {
   teaser: string;
 };
 
 export default function Header({ teaser }: HeaderProps): JSX.Element {
-  return (
-    <StyledHeader>
-      <StyledH1>MatchBall</StyledH1>
-      <h2>{teaser}</h2>
-    </StyledHeader>
-  );
+  const router = useRouter();
+  if (router.pathname === "/scoreForm") {
+    return (
+      <StyledOrangeHeader>
+        <h1>MatchBall</h1>
+        <StyledH2>{teaser}</StyledH2>
+      </StyledOrangeHeader>
+    );
+  } else {
+    return (
+      <StyledHeader>
+        <h1>MatchBall</h1>
+        <StyledH2>{teaser}</StyledH2>
+      </StyledHeader>
+    );
+  }
 }
 
-const StyledHeader = styled.header`
-  margin-left: 2rem;
-  margin-right: 2rem;
+const StyledOrangeHeader = styled.header`
   text-align: center;
-  background-color: black;
-  border: 1px solid white;
+  padding-top: 10px;
+
+  color: var(--strong-orange);
+`;
+const StyledHeader = styled.header`
+  text-align: center;
+  padding-top: 10px;
+
+  color: white;
 `;
 
-const StyledH1 = styled.h1`
-  margin: 0;
-  margin-top: 2vh;
+const StyledH2 = styled.h2`
+  position: relative;
+  bottom: 17px;
 `;
