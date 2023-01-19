@@ -76,6 +76,14 @@ export default function NewUserForm(): JSX.Element {
 
   return (
     <StyledNewUserFormDiv>
+      <Image
+        src={"/beachspielerin.jpg"}
+        alt={"female beachvolleyball player background image"}
+        fill={true}
+        objectFit={"cover"}
+        objectPosition={"center"}
+        style={{ position: "absolute", zIndex: -1 }}
+      />
       <Header teaser={"New Player"} />
       <StyledMain data-cy="new-user-form-main-element">
         <StyledDropdownMenuWrapper>
@@ -156,11 +164,6 @@ export default function NewUserForm(): JSX.Element {
 const StyledNewUserFormDiv = styled.div`
   height: 100vh;
   font-family: baloo_2;
-  background-image: url("/beachspielerin.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
   font-size: 20px;
 `;
 

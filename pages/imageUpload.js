@@ -38,6 +38,14 @@ export default function Home() {
 
   return (
     <StyledMain>
+      <Image
+        src={"/netz-blur.jpg"}
+        alt={"volleyball net background image"}
+        fill={true}
+        objectFit={"cover"}
+        objectPosition={"center"}
+        style={{ position: "absolute", zIndex: -1 }}
+      />
       <Header teaser="Image upload" />
       <form onSubmit={handleFileUpload}>
         <StyledP>
@@ -77,17 +85,13 @@ export default function Home() {
 }
 
 const StyledMain = styled.main`
-  background-image: url("/netz-blur.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
   font-size: 20px;
   height: 110vh;
   width: 110vw;
   color: white;
   font-family: baloo_2;
   text-align: center;
+  position: relative;
 `;
 
 const StyledLink = styled(Link)`
