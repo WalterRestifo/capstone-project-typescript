@@ -43,7 +43,7 @@ const StyledLink = styled(Link)`
 
 const StyledNav = styled.nav`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   position: fixed;
   bottom: 0;
   left: 7%;

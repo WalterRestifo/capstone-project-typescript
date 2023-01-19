@@ -47,17 +47,17 @@ export default function Main({
             dataCy={"skill-select"}
           />
           <DropdownMenu
+            options={gender}
+            criteria={"gender"}
+            onChange={handleChange}
+            dataCy={"gender-select"}
+          />
+          <DropdownMenu
             options={language}
             //cannot use criteria={languages} because it will brake the filter function
             criteria={"language"}
             onChange={handleChange}
             dataCy={"language-select"}
-          />
-          <DropdownMenu
-            options={gender}
-            criteria={"gender"}
-            onChange={handleChange}
-            dataCy={"gender-select"}
           />
         </StyledForm>
       </StyledDropdownMenuWrapper>
