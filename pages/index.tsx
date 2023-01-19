@@ -69,13 +69,8 @@ export default function Home({
 }
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: 110vh;
   font-family: baloo_2;
-  /* background-image: url("/ball.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat; */
   font-size: 20px;
   position: relative;
   overflow: hidden;

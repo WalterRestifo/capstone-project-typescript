@@ -98,7 +98,7 @@ export default function Games(): JSX.Element {
 }
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: 110vh;
   width: 100vw;
   padding: 0;
   font-size: 20px;

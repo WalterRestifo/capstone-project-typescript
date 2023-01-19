@@ -94,7 +94,7 @@ const StyledUl = styled.ul`
 `;
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: 110vh;
   width: 100vw;
   padding: 0;
   font-size: 20px;

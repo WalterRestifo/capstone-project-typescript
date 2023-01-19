@@ -162,7 +162,7 @@ export default function NewUserForm(): JSX.Element {
 }
 
 const StyledNewUserFormDiv = styled.div`
-  height: 100vh;
+  height: 110vh;
   font-family: baloo_2;
   font-size: 20px;
 `;

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Member } from "../interfaces/interfaces";
-import Head from "next/head";
 import Header from "../components/Header";
 import Link from "next/link";
 import Main from "../components/Main";
@@ -80,7 +79,7 @@ export default function TeamChoiceForm({
 }
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: 110vh;
   font-family: baloo_2;
   font-size: 20px;
 `;

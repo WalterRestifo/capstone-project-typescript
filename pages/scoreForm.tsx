@@ -185,9 +185,8 @@ export default function ScoreForm(): JSX.Element {
 }
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: 110vh;
   padding: 0;
-  height: 100vh;
   font-family: baloo_2;
   font-size: 20px;
   color: white;
