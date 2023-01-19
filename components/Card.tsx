@@ -100,7 +100,6 @@ const StyledDiv = styled.div`
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
-  /* transition: scale 0.15s ease; */
   position: relative;
 
   /* From https://css.glass */
@@ -110,11 +109,6 @@ const StyledDiv = styled.div`
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-
-  /* :focus,
-  :active {
-    scale: 1.1;
-  } */
 `;
 
 const StyledDeleteButton = styled.button`

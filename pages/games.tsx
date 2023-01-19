@@ -75,14 +75,14 @@ export default function Games(): JSX.Element {
         data-cy="teamChoice-navigation"
         onClick={handleEmptyLocalStorage}
       >
-        <Link href={"/teamChoice"}>
+        <StyledLink href={"/teamChoice"}>
           <Image
             width={30}
             height={30}
             src={"/plus-rectangle_1.svg"}
             alt="Add a new game"
           />
-        </Link>
+        </StyledLink>
       </StyledAddNewGameButton>
       <Navigation />
     </StyledDiv>
@@ -146,4 +146,12 @@ const StyledAddNewGameButton = styled.button`
   position: absolute;
   bottom: 5.1rem;
   left: 45.5%;
+`;
+
+const StyledLink = styled(Link)`
+  -webkit-tap-highlight-color: transparent;
+  transition: scale 0.15s ease;
+  :active {
+    scale: 1.5;
+  }
 `;

@@ -168,14 +168,14 @@ export default function ScoreForm(): JSX.Element {
         )}
       </StyledForm>
       <StyledNav>
-        <Link href={"/games"} data-cy="back-to-games-page-navigation">
+        <StyledLink href={"/games"} data-cy="back-to-games-page-navigation">
           <Image
             src="/arrow-back.svg"
             alt="arrow back"
             width={60}
             height={60}
           />
-        </Link>
+        </StyledLink>
       </StyledNav>
     </StyledDiv>
   );
@@ -252,5 +252,14 @@ const StyledButton = styled.button`
 
   :active {
     scale: 1.1;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  transition: scale 0.15s ease;
+
+  :active {
+    scale: 1.1;
+    -webkit-tap-highlight-color: transparent;
   }
 `;

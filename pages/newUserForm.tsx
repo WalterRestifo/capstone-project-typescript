@@ -82,7 +82,7 @@ export default function NewUserForm(): JSX.Element {
           <StyledForm onSubmit={handleSubmit}>
             <label htmlFor="uploadButton">
               upload your profile picture:
-              <StyledButton id="uploadButton">
+              <StyledUploadButton id="uploadButton">
                 <Link href="imageUpload">
                   <Image
                     alt="cloud upload"
@@ -91,7 +91,7 @@ export default function NewUserForm(): JSX.Element {
                     width={40}
                   />
                 </Link>
-              </StyledButton>
+              </StyledUploadButton>
             </label>
 
             <label htmlFor="username">Your name (max 10 characters):</label>
@@ -169,6 +169,7 @@ const StyledDropdownMenuWrapper = styled.section`
 `;
 
 const StyledForm = styled.form`
+  margin-top: -1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -187,6 +188,14 @@ const StyledSubmitButton = styled.button`
   height: 7vh;
   width: 30vw;
   border-radius: 25px;
+  border-color: white;
+  color: white;
+  background-color: transparent;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(5px);
 `;
 
 const StyledLink = styled(Link)`
@@ -200,10 +209,11 @@ const StyledLink = styled(Link)`
 
   :active {
     scale: 1.1;
+    -webkit-tap-highlight-color: transparent;
   }
 `;
 
-const StyledButton = styled.button`
+const StyledUploadButton = styled.button`
   border-radius: 25px;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -212,6 +222,13 @@ const StyledButton = styled.button`
   position: relative;
   left: 1em;
   top: 1em;
+  border-color: white;
+  color: white;
+  background-color: transparent;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(5px);
 `;
 
 const StyledP = styled.p`

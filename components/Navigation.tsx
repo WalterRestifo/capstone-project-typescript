@@ -34,22 +34,11 @@ const StyledLink = styled(Link)`
   padding-top: 0.2em;
   border-radius: 25px;
   transition: scale 0.15s ease;
-  //nötig?
-  background: transparent;
-
-  Image:active {
-    background: transparent;
-  }
 
   :active {
     scale: 1.1;
-    background: transparent;
+    -webkit-tap-highlight-color: transparent;
   }
-
-  :focus {
-    background: transparent;
-  }
-  //nötig?
 `;
 
 const StyledNav = styled.nav`

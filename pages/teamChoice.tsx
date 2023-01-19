@@ -104,6 +104,7 @@ const StyledLink = styled(Link)`
   padding-top: 0.2em;
   border-radius: 25px;
   transition: scale 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 
   :active {
     scale: 1.1;
