@@ -4,10 +4,11 @@ const testSkill = "A";
 const testGender = "Male";
 const testLanguage = "English";
 const username = "cytest";
+const url = "http://localhost:3000";
 
 describe("functional tests for the homepage", () => {
   const HomePage = {
-    visit: () => cy.visit("http://localhost:3000"),
+    visit: () => cy.visit(url),
     selectionForm: () => cy.get('[data-cy="selection-form"]'),
     skillFilterSelect: () =>
       cy.get('[data-cy="skill-select"]').select(testSkill),
@@ -30,7 +31,7 @@ describe("functional tests for the homepage", () => {
   };
 
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit(url);
     cy.viewport(375, 667);
   });
 
@@ -74,7 +75,7 @@ describe("functional tests for the homepage", () => {
       .children()
       .its("length")
       .then((number) => {
-        cy.get('[data-cy="delete-user-button"]').last().click({ force: true });
+        cy.get('[data-cy="delete-user-button"]').first().click({ force: true });
         cy.wait(1000);
         cy.reload();
         cy.wait(1000);
