@@ -143,12 +143,17 @@ const StyledDeleteButton = styled.button`
   background-color: transparent;
 `;
 
+// position: absolute;
+  // bottom: 5.1rem;
+  // left: 45.5%;
+
 const StyledAddNewGameButton = styled.button`
   border: none;
   background-color: transparent;
-  position: absolute;
-  bottom: 5.1rem;
-  left: 45.5%;
+  position: relative;
+  left: 47vw;
+  top: 3vh;
+  
 `;
 
 const StyledLink = styled(Link)`
