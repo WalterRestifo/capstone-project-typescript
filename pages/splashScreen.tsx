@@ -7,13 +7,15 @@ return <StyledSplashScreen>
 alt="logo of Matchball"
 width={350}
 height={350}/>
-</StyledImage></StyledSplashScreen>
+</StyledImage>
+<h1>Loading...</h1>
+</StyledSplashScreen>
 }
 
 const StyledSplashScreen = styled.div`
 height: 100vh;
 width:100vw;
-background-color: black;
+background-color: white;
 
 `
 
