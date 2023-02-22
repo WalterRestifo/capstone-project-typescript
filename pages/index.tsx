@@ -6,6 +6,8 @@ import { Criteria, Member } from "../interfaces/interfaces";
 import Navigation from "../components/Navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import SplashScreen from "./splashScreen";
+import CacheLoader from "../components/CacheLoader";
 
 type HomeProps = {
   desiredPlayer: Criteria;
@@ -41,7 +43,9 @@ export default function Home({
 
   return (
     <StyledDiv>
-      <Image
+      <CacheLoader/>
+
+      {allPlayers.length === 0 ? <SplashScreen/> : (<> <Image
         src={"/ball.jpg"}
         alt={"Ball background image"}
         fill={true}
@@ -63,7 +67,8 @@ export default function Home({
         setAllPlayers={setAllPlayers}
         isSelectable={false}
       />
-      <Navigation />
+      <Navigation /> </>) }
+      
     </StyledDiv>
   );
 }
@@ -75,3 +80,4 @@ const StyledDiv = styled.div`
   position: relative;
   overflow: hidden;
 `;
+
