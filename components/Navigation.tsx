@@ -44,9 +44,9 @@ const StyledLink = styled(Link)`
 const StyledNav = styled.nav`
   display: flex;
   justify-content: space-evenly;
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  left: 7%;
-  width: 100vw;
+  margin-left: 15vw;
+  width: 85vw;
   background: transparent;
 `;
