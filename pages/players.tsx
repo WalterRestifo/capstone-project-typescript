@@ -1,16 +1,18 @@
 import styled from "styled-components";
+import Head from "next/head";
+import Header from "../components/Header";
+import Main from "../components/Main";
 import { Criteria, Member } from "../interfaces/interfaces";
+import Navigation from "../components/Navigation";
 import { useEffect, useState } from "react";
-import SplashScreen from "./splashScreen";
-import CacheLoader from "../components/CacheLoader";
-import Players from "./players";
+import Image from "next/image";
 
 type HomeProps = {
   desiredPlayer: Criteria;
   setDesiredPlayer: any;
 };
 
-export default function Home({
+export default function Players({
   desiredPlayer,
   setDesiredPlayer,
 }: HomeProps): JSX.Element {
@@ -39,12 +41,29 @@ export default function Home({
 
   return (
     <StyledDiv>
-      
+      <Image
+        src={"/ball.jpg"}
+        alt={"Ball background image"}
+        fill={true}
+        objectFit={"cover"}
+        objectPosition={"center"}
+        style={{ position: "absolute", zIndex: -1 }}
+      />
 
-      {allPlayers.length === 0 ? <SplashScreen/> : (<> 
-        <CacheLoader/>
-        <Players desiredPlayer={desiredPlayer} setDesiredPlayer={setDesiredPlayer}/>
-       </>) }
+      <Head>
+        <title>MatchBall</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header teaser={"you have a match!"} />
+      <Main
+        desiredPlayer={desiredPlayer}
+        setDesiredPlayer={setDesiredPlayer}
+        allPlayers={allPlayers}
+        setAllPlayers={setAllPlayers}
+        isSelectable={false}
+      />
+      <Navigation />
       
     </StyledDiv>
   );

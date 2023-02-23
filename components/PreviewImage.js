@@ -3,8 +3,8 @@ import { useMemo } from "react";
 
 export default function ImagePreview({
   file,
-  height = 400,
-  width = 400,
+  height = 300,
+  width = 300,
   objectFit = "cover",
 }) {
   const src = useMemo(() => URL.createObjectURL(file), [file]);

@@ -88,7 +88,7 @@ export default function NewUserForm(): JSX.Element {
       <StyledMain data-cy="new-user-form-main-element">
         <StyledDropdownMenuWrapper>
           <StyledForm onSubmit={handleSubmit}>
-            <label htmlFor="uploadButton">
+            <StyledUploadLabel htmlFor="uploadButton">
               upload your profile picture:
               <StyledUploadButton id="uploadButton">
                 <Link href="imageUpload">
@@ -100,7 +100,7 @@ export default function NewUserForm(): JSX.Element {
                   />
                 </Link>
               </StyledUploadButton>
-            </label>
+            </StyledUploadLabel>
 
             <label htmlFor="username">Your name (max 10 characters):</label>
             <input
@@ -148,7 +148,7 @@ export default function NewUserForm(): JSX.Element {
         <StyledP>
           {isSubmitted && "Your profile was created successfully!"}
         </StyledP>
-        <StyledLink data-cy="back-to-homepage-navigation" href={"/"}>
+        <StyledLink data-cy="back-to-homepage-navigation" href={"/players"}>
           <Image
             alt="Home"
             src="/webpagehome-white.svg"
@@ -162,13 +162,14 @@ export default function NewUserForm(): JSX.Element {
 }
 
 const StyledNewUserFormDiv = styled.div`
-  height: 100vh;
+  height: 100dvh;
   font-family: baloo_2;
   font-size: 20px;
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
   color: white;
+  margin-top:-8dvh;
 `;
 
 const StyledForm = styled.form`
@@ -182,14 +183,34 @@ const StyledForm = styled.form`
   gap: 1rem;
 `;
 
+const StyledUploadLabel = styled.label`
+text-align: center;
+`
+
+const StyledUploadButton = styled.button`
+  border-radius: 25px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-color: white;
+  color: white;
+  background-color: transparent;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(5px);
+`;
+
 const StyledMain = styled.main`
   margin-left: 2rem;
   margin-right: 2rem;
+  height: 100dvh;
 `;
 
 const StyledSubmitButton = styled.button`
-  height: 7vh;
-  width: 30vw;
+  height: 7dvh;
+  width: 30dvw;
   border-radius: 25px;
   border-color: white;
   color: white;
@@ -202,11 +223,11 @@ const StyledSubmitButton = styled.button`
 `;
 
 const StyledLink = styled(Link)`
-  position: fixed;
-  bottom: 0;
+  position: relative;
+  bottom: 12.5dvh;
   left: 7%;
-  height: 10vh;
-  width: 30vw;
+  height: 10dvh;
+  width: 30dvw;
   border-radius: 25px;
   transition: scale 0.15s ease;
 
@@ -216,23 +237,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const StyledUploadButton = styled.button`
-  border-radius: 25px;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  padding-left: 1em;
-  padding-right: 1em;
-  position: relative;
-  left: 1em;
-  top: 1em;
-  border-color: white;
-  color: white;
-  background-color: transparent;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(5px);
-`;
+
 
 const StyledP = styled.p`
   color: white;

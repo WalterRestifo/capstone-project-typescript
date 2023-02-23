@@ -86,8 +86,8 @@ export default function Home() {
 
 const StyledMain = styled.main`
   font-size: 20px;
-  height: 110vh;
-  width: 110vw;
+  height: 100dvh;
+  width: 100dvw;
   color: white;
   font-family: baloo_2;
   text-align: center;

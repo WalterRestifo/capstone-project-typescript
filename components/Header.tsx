@@ -40,4 +40,5 @@ const StyledHeader = styled.header`
 const StyledH2 = styled.h2`
   position: relative;
   bottom: 17px;
+  margin-bottom: -2dvh;
 `;

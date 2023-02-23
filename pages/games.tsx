@@ -151,8 +151,8 @@ const StyledAddNewGameButton = styled.button`
   border: none;
   background-color: transparent;
   position: relative;
-  left: 47vw;
-  top: 3vh;
+  left: 47dvw;
+  top: 1dvh;
   
 `;
 

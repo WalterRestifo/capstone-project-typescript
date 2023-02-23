@@ -98,7 +98,7 @@ const StyledCardsWrapperSection = styled.section`
 `;
 
 const StyledDropdownMenuWrapper = styled.section`
-  padding-left: 3.1rem;
+  padding-left: 25dvw;
   padding-right: 3.1rem;
   height: fit-content;
 

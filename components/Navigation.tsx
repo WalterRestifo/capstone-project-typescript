@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Navigation(): JSX.Element {
   return (
     <StyledNav>
-      <StyledLink href={"/"}>
+      <StyledLink href={"/players"}>
         <Image alt="Home" src="/webpagehome-white.svg" height={55} width={55} />
       </StyledLink>
       <StyledLink href={"/games"}>
