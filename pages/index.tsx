@@ -39,11 +39,8 @@ export default function Home({
 
   return (
     <StyledDiv>
-      {allPlayers.length === 0 ? (
-        <>
-          <SplashScreen />
-          <CacheLoader />
-        </>
+      {CacheLoader() !== false ? (
+        <SplashScreen />
       ) : (
         <>
           <Players
