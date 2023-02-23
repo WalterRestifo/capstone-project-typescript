@@ -74,7 +74,7 @@ export default function Home({
 }
 
 const StyledDiv = styled.div`
-  height: 100vh;
+  height: 100dvh;
   font-family: baloo_2;
   font-size: 20px;
   position: relative;
