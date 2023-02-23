@@ -90,7 +90,8 @@ export default function NewUserForm(): JSX.Element {
           <StyledForm onSubmit={handleSubmit}>
             <StyledUploadLabel htmlFor="uploadButton">
               upload your profile picture:
-              <StyledUploadButton id="uploadButton">
+            </StyledUploadLabel>
+            <StyledUploadButton id="uploadButton">
                 <Link href="imageUpload">
                   <Image
                     alt="cloud upload"
@@ -100,7 +101,6 @@ export default function NewUserForm(): JSX.Element {
                   />
                 </Link>
               </StyledUploadButton>
-            </StyledUploadLabel>
 
             <label htmlFor="username">Your name (max 10 characters):</label>
             <input
@@ -170,11 +170,10 @@ const StyledNewUserFormDiv = styled.div`
 
 const StyledDropdownMenuWrapper = styled.section`
   color: white;
-  margin-top:-8dvh;
+  margin-top: 5dvh;
 `;
 
 const StyledForm = styled.form`
-  margin-top: -1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -225,7 +224,7 @@ const StyledSubmitButton = styled.button`
 
 const StyledLink = styled(Link)`
   position: relative;
-  bottom: 12.5dvh;
+  top: 3dvh;
   left: 7%;
   height: 10dvh;
   width: 30dvw;
