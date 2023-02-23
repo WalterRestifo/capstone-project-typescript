@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/imageUpload.js",
-    "components/CacheLoader.js"
+    "components/CacheLoader.js",
+    "pages/index.js"
   ],
   "exclude": ["node_modules"]
 }
