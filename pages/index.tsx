@@ -39,13 +39,19 @@ export default function Home({
 
   return (
     <StyledDiv>
-      
-
-      {allPlayers.length === 0 ? <SplashScreen/> : (<> 
-        <CacheLoader/>
-        <Players desiredPlayer={desiredPlayer} setDesiredPlayer={setDesiredPlayer}/>
-       </>) }
-      
+      {allPlayers.length === 0 ? (
+        <>
+          <SplashScreen />
+          <CacheLoader />
+        </>
+      ) : (
+        <>
+          <Players
+            desiredPlayer={desiredPlayer}
+            setDesiredPlayer={setDesiredPlayer}
+          />
+        </>
+      )}
     </StyledDiv>
   );
 }
@@ -57,4 +63,3 @@ const StyledDiv = styled.div`
   position: relative;
   overflow: hidden;
 `;
-

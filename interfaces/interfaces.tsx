@@ -1,3 +1,5 @@
+import { prototype } from "events";
+
 export interface Member {
   name: string;
   skill: string;
@@ -31,4 +33,9 @@ export interface Match {
   team2: Team;
   id: string;
   winner: string;
+}
+
+export interface ImageInterface {
+  prototype: HTMLImageElement;
+  new (): HTMLImageElement;
 }
