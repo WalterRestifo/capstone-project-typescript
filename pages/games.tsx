@@ -98,11 +98,12 @@ export default function Games(): JSX.Element {
 }
 
 const StyledDiv = styled.div`
-  height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100dvw;
   padding: 0;
   font-size: 20px;
   font-family: baloo_2;
+  position: relative;
   overflow: hidden;
 `;
 
@@ -118,8 +119,8 @@ const StyledP = styled.p`
 const StyledMatchWrapperSection = styled.section`
   overflow-y: scroll;
   border: 1px solid white;
-  height: 65vh;
-  width: 100vw;
+  height: 65dvh;
+  width: 100dvw;
   margin-top: -1rem;
 `;
 
