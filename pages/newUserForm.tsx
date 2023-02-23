@@ -165,6 +165,7 @@ const StyledNewUserFormDiv = styled.div`
   height: 100dvh;
   font-family: baloo_2;
   font-size: 20px;
+  overflow: hidden;
 `;
 
 const StyledDropdownMenuWrapper = styled.section`

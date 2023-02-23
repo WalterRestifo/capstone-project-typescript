@@ -29,8 +29,8 @@ export default function Navigation(): JSX.Element {
 }
 
 const StyledLink = styled(Link)`
-  height: 10vh;
-  width: 30vw;
+  height: 10dvh;
+  width: 30dvw;
   padding-top: 0.2em;
   border-radius: 25px;
   transition: scale 0.15s ease;
@@ -43,10 +43,10 @@ const StyledLink = styled(Link)`
 
 const StyledNav = styled.nav`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   position: relative;
-  top: 1vh;
-  margin-left: 15vw;
-  width: 85vw;
+  margin-left: 7dvw;
+  top: 8dvh;
+  width: 100dvw;
   background: transparent;
 `;

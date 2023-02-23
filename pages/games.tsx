@@ -103,6 +103,7 @@ const StyledDiv = styled.div`
   padding: 0;
   font-size: 20px;
   font-family: baloo_2;
+  overflow: hidden;
 `;
 
 const StyledUl = styled.ul`
@@ -142,10 +143,6 @@ const StyledDeleteButton = styled.button`
   border: none;
   background-color: transparent;
 `;
-
-// position: absolute;
-  // bottom: 5.1rem;
-  // left: 45.5%;
 
 const StyledAddNewGameButton = styled.button`
   border: none;

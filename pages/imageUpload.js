@@ -92,6 +92,7 @@ const StyledMain = styled.main`
   font-family: baloo_2;
   text-align: center;
   position: relative;
+  overflow: hidden;
 `;
 
 const StyledLink = styled(Link)`

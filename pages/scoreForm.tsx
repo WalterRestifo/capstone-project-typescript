@@ -191,6 +191,7 @@ const StyledDiv = styled.div`
   font-size: 20px;
   color: white;
   position: relative;
+  overflow: hidden;
 `;
 
 const StyledForm = styled.form`
