@@ -88,7 +88,7 @@ const StyledMain = styled.main`
   grid-template-rows: 8rem auto;
 
   overflow-y: scroll;
-  height: 71.5vh;
+  height: 70dvh;
 `;
 
 const StyledCardsWrapperSection = styled.section`
