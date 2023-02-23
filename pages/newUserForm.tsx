@@ -205,7 +205,6 @@ const StyledUploadButton = styled.button`
 const StyledMain = styled.main`
   margin-left: 2rem;
   margin-right: 2rem;
-  height: 100dvh;
 `;
 
 const StyledSubmitButton = styled.button`
@@ -224,7 +223,7 @@ const StyledSubmitButton = styled.button`
 
 const StyledLink = styled(Link)`
   position: relative;
-  top: 3dvh;
+  bottom:9dvh;
   left: 7%;
   height: 10dvh;
   width: 30dvw;
