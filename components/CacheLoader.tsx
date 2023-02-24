@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-export default function CacheLoader(setIsLoading) {
+export default function CacheLoader() {
   return (
     <StyledcacheLoader>
       <Image
@@ -39,6 +39,14 @@ export default function CacheLoader(setIsLoading) {
       <Image
         src={"/2players.jpg"}
         alt={"volleyball game background image"}
+        fill={true}
+        objectFit={"cover"}
+        objectPosition={"center"}
+        style={{ position: "absolute", zIndex: -1 }}
+      />
+      <Image
+        src={"/ball.jpg"}
+        alt={"Ball background image"}
         fill={true}
         objectFit={"cover"}
         objectPosition={"center"}

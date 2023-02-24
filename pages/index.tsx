@@ -3,8 +3,14 @@ import { useEffect, useState } from "react";
 import SplashScreen from "./splashScreen";
 import CacheLoader from "../components/CacheLoader";
 import Players from "./players";
+import { Criteria } from "../interfaces/interfaces";
 
-export default function Home({ desiredPlayer, setDesiredPlayer }) {
+type HomeProps = {
+  desiredPlayer: Criteria;
+  setDesiredPlayer: any;
+};
+
+export default function Home({ desiredPlayer, setDesiredPlayer }: HomeProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
